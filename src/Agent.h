@@ -12,7 +12,7 @@ private:
 public:
 	Agent(Body* body);
 
-	void Life();
+	virtual void Life() = 0;
 
 	~Agent(void);
 };
