@@ -1,21 +1,14 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator(int numberOfAgents)
+Simulator::Simulator()
 {
-	this->numberOfAgents = numberOfAgents;
 	this->SFMLView.Init(800, 800);
 }
 
-void Simulator::CreateWorld()
+void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
 {
-	for (int i=0; i<this->numberOfAgents; ++i)
-	{
-		Body* body = this->world.CreateBody();
-		this->agents.push_back(Agent(body));
-	}
-
-	this->SFMLView.SetWorld(&this->world);
+    this->world.
 }
 
 void Simulator::Run()

@@ -8,21 +8,33 @@
 #include "GraphicView.h"
 #include "Agent.h"
 #include "World.h"
+#include "Problem.h"
+
+/*
+*   The Simulator is the main class of the project.
+*   The Simulator is created with an instance of the Problem class. The Problem modelises what it is that the Simulator is trying
+*   to solve : drone, pendulum, slink, etc.
+*   The Simulator then inits the program, creates the world and the agents, links the agents to their bodies, links the agents
+*   to the Problem accordingly.
+*
+*   It then runs the whole thing via the Run function.
+*/
+
 
 class Simulator
 {
 private:
-	int numberOfAgents;
 	GraphicView SFMLView;
-	World world;
-	std::vector<Agent> agents;
-
-	Simulator(void) {}
+	World world;    // The environment
+	std::vector<Agent*> agents; // All the agents
+    Problem* problem;   // The instance of the Problem.
 
 public:
-	Simulator(int numberOfAgents);
+	Simulator();
 
-	void CreateWorld();
+    // Creates a body for the given agent at given position, then adds this agent to the list,
+    void addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos);
+
 	void Run();
 
 	~Simulator(void);

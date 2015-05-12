@@ -6,6 +6,10 @@
 
 #include "World.h"
 
+/*
+*   The GraphicView is charged of visualizing the whole thing.
+*/
+
 class GraphicView
 {
 private:

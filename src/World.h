@@ -3,8 +3,19 @@
 
 #include <vector>
 
-#include "Body.h"
-#include "BasicAgent.h"
+#include "BodyEmitter.h"
+#include "BodyReceptor.h"
+#include "Agent.h"
+
+/*
+*   The World is the environment. It contains a list of all the PhysicalObjects that exist in it.
+*/
+
+enum BODY_TYPE
+{
+    EMITTER,
+    RECEPTOR
+};
 
 class World
 {
@@ -15,8 +26,9 @@ private:
 public:
 	World(void);
 
-	Body* CreateBody();
-	void CreateWall();
+    // Creates a body with the given type
+	Body* CreateBody(BODY_TYPE bodyType);
+	Wave* createWave(int id, float waveLength); //TODO: finish that
 
 	std::vector<PhysicalObject*>* GetListOfPhysicalObjects();
 	std::vector<Body*>* GetListOfBodys();

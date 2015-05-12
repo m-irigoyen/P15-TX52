@@ -5,25 +5,32 @@ World::World(void)
 {
 }
 
-Body* World::CreateBody()
+//TODO: finish that
+Body* World::CreateBody(BODY_TYPE bodyType)
 {
-	this->listOfPhysicalObjects.push_back(new Body(BasicAgent()));
-	Body* body = static_cast<Body*>(this->listOfPhysicalObjects.at(this->listOfPhysicalObjects.size()-1));
+    Body* body;
+    switch (bodyType)
+    {
+        case BODY_TYPE.EMITTER :
+            body = new BodyEmitter(Semantic(Tags.emitter));
+            break;
+        case BODY_TYPE.RECEPTOR :
+            body = new BodyEmitter(Semantic(Tags.receptor));
+            break;
+    }
+	//this->listOfPhysicalObjects.push_back(body);
+	//body = static_cast<Body*>(this->listOfPhysicalObjects.at(this->listOfPhysicalObjects.size()-1));
 	this->listOfBodys.push_back(body);
 	return body;
 }
 
-void World::CreateWall()
-{
 
-}
-
-std::vector<PhysicalObject*>* World::GetListOfPhysicalObjects() 
+std::vector<PhysicalObject*>* World::GetListOfPhysicalObjects()
 {
 	return &this->listOfPhysicalObjects;
 }
 
-std::vector<Body*>* World::GetListOfBodys() 
+std::vector<Body*>* World::GetListOfBodys()
 {
 	return &this->listOfBodys;
 }
