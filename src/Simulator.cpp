@@ -8,7 +8,8 @@ Simulator::Simulator()
 
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
 {
-    this->world.
+	//TODO: finish that
+    //this->world.
 }
 
 void Simulator::Run()
@@ -25,7 +26,7 @@ void Simulator::Run()
 		int nbAgents = static_cast<int>(agents.size());
 		for (int i = 0; i < nbAgents; ++i)
 		{
-			this->agents[i].Life();
+			agents[i]->live();
 		}
 
 		this->SFMLView.Draw();

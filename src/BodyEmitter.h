@@ -4,7 +4,7 @@
 #include "BodyReceptor.h"
 
 /*
-*
+*	Emitters can send waves in the world.
 */
 
 class BodyEmitter:  public BodyReceptor
@@ -12,9 +12,9 @@ class BodyEmitter:  public BodyReceptor
 private:
 
 public:
-	BodyEmitter(Semantic type);
+	BodyEmitter(Semantic type, World* world);
 
-    void createWave(float waveLength);
+    void send(float frequency, float amplitude);
 
 	~BodyEmitter(void);
 };

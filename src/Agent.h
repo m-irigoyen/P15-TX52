@@ -2,6 +2,7 @@
 #define AGENT_H_
 
 #include "Body.h"
+#include "Problem.h"
 
 /*
 *   Agents are connected with Bodies. Agents are the mind, Bodies are the matter.
@@ -15,14 +16,17 @@
 
 class Agent
 {
-private:
+protected:
 	Body* body;
-	Agent(void) {}
+	Problem* problem;
 
 public:
-	Agent(Body* body);
+	Agent(Problem* problem, Body* body = NULL);
 
-	virtual void Live() = 0;
+	virtual void live() = 0;
+
+	virtual void connect(Body* body);
+	virtual void disconnect();
 
 	~Agent(void);
 };

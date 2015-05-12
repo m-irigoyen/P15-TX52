@@ -1,17 +1,18 @@
 #include "BodyReceptor.h"
 
-BodyReceptor::BodyReceptor(Semantic type)
+BodyReceptor::BodyReceptor(Semantic type, World* world) : Body(type, world)
 {
 
 }
 
     // Returns a list of percieved waves
-std::vector<Perception> BodyReceptor::GetPerception()
+Perception BodyReceptor::GetPerception()
 {
-    return this->world->getPerception(this);
+	//TODO:
+	return Perception(0, 0.0f);
 }
 
-void BodyReceptor::update(float dt)
+void BodyReceptor::update(int elapsedTime)
 {
 
 }

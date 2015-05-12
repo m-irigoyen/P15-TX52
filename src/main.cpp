@@ -2,9 +2,9 @@
 
 int main(int argc, char* argv[]) 
 {
-	Simulator simulatorOfLemming(5000);
-	simulatorOfLemming.CreateWorld();
-	simulatorOfLemming.Run();
+	Simulator simulator;
+	//simulator.CreateWorld();
+	simulator.Run();
 
 	return EXIT_SUCCESS;
 }

@@ -1,10 +1,10 @@
-#include "BodyReceptor.h"
+#include "BodyEmitter.h"
 
-BodyEmitter::BodyEmitter(Semantic type) : BodyReceptor(type)
+BodyEmitter::BodyEmitter(Semantic type, World* world) : BodyReceptor(type, world)
 {
 }
 
 //TODO: finish that
-void BodyEmitter::createWave(float waveLength)
+void BodyEmitter::send(float frequency, float amplitude)
 {
 }

@@ -11,11 +11,11 @@ Body* World::CreateBody(BODY_TYPE bodyType)
     Body* body;
     switch (bodyType)
     {
-        case BODY_TYPE.EMITTER :
-            body = new BodyEmitter(Semantic(Tags.emitter));
+	case BODY_TYPE::EMITTER :
+            body = new BodyEmitter(Semantic(Tags::emitter), this);
             break;
-        case BODY_TYPE.RECEPTOR :
-            body = new BodyEmitter(Semantic(Tags.receptor));
+	case BODY_TYPE::RECEPTOR :
+            body = new BodyEmitter(Semantic(Tags::receptor), this);
             break;
     }
 	//this->listOfPhysicalObjects.push_back(body);

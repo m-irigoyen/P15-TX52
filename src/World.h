@@ -4,8 +4,7 @@
 #include <vector>
 
 #include "BodyEmitter.h"
-#include "BodyReceptor.h"
-#include "Agent.h"
+#include "Wave.h"
 
 /*
 *   The World is the environment. It contains a list of all the PhysicalObjects that exist in it.
@@ -13,7 +12,7 @@
 
 enum BODY_TYPE
 {
-    EMITTER,
+    EMITTER = 0,
     RECEPTOR
 };
 

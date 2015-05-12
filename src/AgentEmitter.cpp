@@ -1,6 +1,10 @@
 #include "AgentEmitter.h"
 
-AgentEmitter::AgentEmitter(Body* body) : Agent(body)
+AgentEmitter::AgentEmitter(Problem* problem, Body* body) : Agent(problem, body)
 {
 }
 
+void AgentEmitter::live()
+{
+
+}

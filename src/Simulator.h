@@ -5,10 +5,8 @@
 #include <chrono>
 #include <iostream>
 
-#include "GraphicView.h"
 #include "Agent.h"
-#include "World.h"
-#include "Problem.h"
+#include "GraphicView.h"
 
 /*
 *   The Simulator is the main class of the project.

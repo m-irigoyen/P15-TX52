@@ -15,21 +15,11 @@
 class Body:  public PhysicalObject
 {
 private:
-	Body(void) {}
 
 public:
-	Body(Semantic type);
+	Body(Semantic type, World* world);
 
-	virtual std::vector<Perception> GetPerception() = 0;    // Returns a list of percieved waves
-	virtual void update(float dt) = 0;
-    // Position getters and setters
-	virtual void SetPosition(float x, float y);
-	virtual void GetPosition(float &x, float &y);
-	virtual std::vector<float> GetPosition();
-
-    // Semantic getters and setters
-	virtual void SetSemantic(Semantic type);
-	virtual Semantic* GetSemantic();
+	virtual void update(int elapsedTime) = 0;
 
 	~Body(void);
 };

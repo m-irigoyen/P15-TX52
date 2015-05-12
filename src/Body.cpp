@@ -1,7 +1,7 @@
 #include "Body.h"
 
 
-Body::Body(Semantic type)
+Body::Body(Semantic type, World* world) : PhysicalObject(type, world)
 {
 	this->type = type;
 	this->posX = rand()%800;

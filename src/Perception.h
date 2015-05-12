@@ -9,7 +9,6 @@
 class Perception
 {
 private:
-	Perception(void) {}
 	int m_waveId;   // The id of the wave percieved. (The id depends of the emitter)
 	float m_waveLength; // The wavelength percieved
 

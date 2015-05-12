@@ -1,9 +1,9 @@
 #include "PhysicalObject.h"
 
 
-PhysicalObject::PhysicalObject(Semantic type) : this->world(world)
+PhysicalObject::PhysicalObject(Semantic type, World* world) : world(world), type(type)
 {
-	this->type = type;
+	
 }
 
 

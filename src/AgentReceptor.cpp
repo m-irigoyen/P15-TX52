@@ -1,5 +1,11 @@
 #include "AgentReceptor.h"
 
-AgentReceptor::AgentReceptor(Body* body) : Agent(body)
+AgentReceptor::AgentReceptor(Problem* problem, Body* body) : Agent(problem, body)
 {
+
+}
+
+void AgentReceptor::live()
+{
+
 }

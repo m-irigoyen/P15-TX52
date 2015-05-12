@@ -4,13 +4,15 @@
 #include <vector>
 
 #include "Semantic.h"
-#include "World.h"
 
 /*
 *   The PhysicalObject is the main class for all the object in the simulation.
 *   Everything that exists in the environment is derived from a PhysicalObject.
 *   PhysicalObjects are defined by their Semantic.
 */
+
+//Forward declaration
+class World;
 
 class PhysicalObject
 {
@@ -20,8 +22,6 @@ protected:
 	float posY;
 
 	World* world;
-
-	PhysicalObject(void) {}
 
 public:
 	PhysicalObject(Semantic type, World* world);
@@ -35,7 +35,7 @@ public:
 
     //TODO: adapt that "dt" with the chrono system from Golé
     // updates the object every frame
-	virtual void update(float dt) = 0;
+	virtual void update(int elapsedTime) = 0;
 
 	~PhysicalObject(void);
 };

@@ -9,14 +9,12 @@
 
 class AgentEmitter : public Agent
 {
-private:
-	Body* body;
-	AgentEmitter(void) {}
+protected:
 
 public:
-	AgentEmitter(Body* body);
+	AgentEmitter(Problem* problem, Body* body = NULL);
 
-	virtual void Live();
+	virtual void live();
 
 	~AgentEmitter(void);
 };

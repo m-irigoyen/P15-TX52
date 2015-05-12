@@ -9,14 +9,12 @@
 
 class AgentReceptor : public Agent
 {
-private:
-	Body* body;
-	AgentReceptor(void) {}
+protected:
 
 public:
-	AgentReceptor(Body* body);
+	AgentReceptor(Problem* problem, Body* body = NULL);
 
-	virtual void Live();
+	virtual void live();
 
 	~AgentReceptor(void);
 };

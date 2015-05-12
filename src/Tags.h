@@ -1,11 +1,13 @@
 #ifndef TAGS_H_
 #define TAGS_H_
 
+#include <string>
+
 class Tags
 {
 public:
-	static const string emitter = "Emitter";
-	static const string receptor = "Receptor";
+	static const std::string emitter;
+	static const std::string receptor;
 };
 
 #endif

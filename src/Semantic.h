@@ -10,15 +10,13 @@
 class Semantic
 {
 private:
-    string semantic;
+	std::string semantic;
 public:
-	Semantic(string semantic);
+	Semantic(std::string semantic);
 
 	~Semantic(void);
-	string getSemantic() {return this->semantic;}
-	void setSemantic(string semantic) {this->semantic = semantic;}
-
-
+	std::string getSemantic();
+	void setSemantic(std::string semantic);
 };
 
 #endif
