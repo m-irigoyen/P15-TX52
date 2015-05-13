@@ -7,7 +7,7 @@ GraphicView::GraphicView(void)
 
 void GraphicView::Init(int height, int width)
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(height, width), "VI51 - Simulator of Lemming");
+	this->window = new sf::RenderWindow(sf::VideoMode(height, width), "TX52 - Wave Simulator");
 	this->window->setVerticalSyncEnabled(true);
 }
 
@@ -29,22 +29,23 @@ void GraphicView::Draw()
 {
 	window->clear(sf::Color::Black);
 
-	std::vector<Body*>* listOfBodys = this->world->GetListOfBodys();
-	if (this->bodyShape.size() != listOfBodys->size())
+	std::vector<BodyReceptor*>* worldReceptors = this->world->getReceptors();
+	if (this->receptors.size() != worldReceptors->size())
 	{
-		this->bodyShape.clear();
-		for (int i=0; i<listOfBodys->size(); ++i)
+		this->receptors.clear();
+		for (int i=0; i < worldReceptors->size(); ++i)
 		{
-			this->bodyShape.push_back(sf::CircleShape(2));
-			this->bodyShape.at(this->bodyShape.size()-1).setFillColor(sf::Color(255, 255, 255));
+			this->receptors.push_back(sf::CircleShape(2));
+			this->receptors.at(this->receptors.size()-1).setFillColor(sf::Color(255, 0, 0));
+			//std::cout << "i = " << i << ", size = " << worldReceptors->size() << std::endl;
 		}
 	}
 
-	for (int idCurrentBody=0; idCurrentBody<listOfBodys->size(); ++idCurrentBody)
+	for (int idCurrentBody=0; idCurrentBody < worldReceptors->size(); ++idCurrentBody)
 	{
-		std::vector<float> pos = listOfBodys->at(idCurrentBody)->GetPosition();
-		this->bodyShape[idCurrentBody].setPosition(pos[0], pos[1]);
-		window->draw(this->bodyShape[idCurrentBody]);
+		std::vector<float> pos = worldReceptors->at(idCurrentBody)->GetPosition();
+		this->receptors[idCurrentBody].setPosition(pos[0], pos[1]);
+		window->draw(this->receptors[idCurrentBody]);
 	}
 
 	window->display();

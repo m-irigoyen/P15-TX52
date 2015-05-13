@@ -4,6 +4,8 @@
 Simulator::Simulator()
 {
 	this->SFMLView.Init(800, 800);
+
+	this->SFMLView.SetWorld(&this->world);
 }
 
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
@@ -32,8 +34,15 @@ void Simulator::run(int elapsedTime)
 		}
 
 		// Updating Bodies
-		for (std::vector<Body*>::iterator it = this->world.GetListOfBodys()->begin();
-			it != this->world.GetListOfBodys()->end();
+		for (std::vector<BodyEmitter*>::iterator it = this->world.getEmitters()->begin();
+			it != this->world.getEmitters()->end();
+			++it)
+		{
+			(*it)->update(elapsedTime);
+		}
+
+		for (std::vector<BodyReceptor*>::iterator it = this->world.getReceptors()->begin();
+			it != this->world.getReceptors()->end();
 			++it)
 		{
 			(*it)->update(elapsedTime);

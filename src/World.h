@@ -2,7 +2,9 @@
 #define WORLD_H_
 
 #include <vector>
+#include <iostream>
 
+#include "BodyReceptor.h"
 #include "BodyEmitter.h"
 #include "Wave.h"
 
@@ -20,8 +22,8 @@ class World
 {
 private:
 	std::vector<PhysicalObject*> listOfPhysicalObjects;
-	std::vector<BodyEmitter*> listOfReceptors;
-	std::vector<BodyReceptor*> listOfEmitters;
+	std::vector<BodyReceptor*> receptors;
+	std::vector<BodyEmitter*> emitters;
 
 public:
 	World(void);
@@ -31,7 +33,8 @@ public:
 	Wave* createWave(int id, float waveLength); //TODO: finish that
 
 	std::vector<PhysicalObject*>* GetListOfPhysicalObjects();
-	std::vector<Body*>* GetListOfBodys();
+	std::vector<BodyEmitter*>* getEmitters();
+	std::vector<BodyReceptor*>* getReceptors();
 
 	~World(void);
 };

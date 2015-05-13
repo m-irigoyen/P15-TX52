@@ -15,6 +15,7 @@ public:
 	BodyEmitter(Semantic type);
 
     void send(float frequency, float amplitude);
+    virtual void update(int elapsedTime);
 
 	~BodyEmitter(void);
 };

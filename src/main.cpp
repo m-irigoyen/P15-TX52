@@ -1,8 +1,11 @@
 #include "Simulator.h"
 
-int main(int argc, char* argv[]) 
+using namespace std;
+
+int main(int argc, char* argv[])
 {
 	Simulator simulator;
+
 	//simulator.CreateWorld();
 	simulator.run(60);
 

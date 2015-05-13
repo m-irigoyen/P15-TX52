@@ -2,7 +2,7 @@
 
 World::World(void)
 {
-
+    this->receptors.clear();
 }
 
 Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
@@ -11,16 +11,14 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
     switch (bodyType)
     {
 	case BODY_TYPE::EMITTER :
-            body = new BodyEmitter(Semantic(Tags::emitter), this);
-            this->emitters.push_back(body);
+            this->emitters.push_back(new BodyEmitter(Semantic(Tags::emitter)));
+            body = static_cast<Body*>(this->emitters.at(this->emitters.size()-1));
             break;
 	case BODY_TYPE::RECEPTOR :
-            body = new BodyEmitter(Semantic(Tags::receptor), this);
-            this->receptors.push_back(body);
+            this->receptors.push_back(new BodyReceptor(Semantic(Tags::receptor)));
+            body = static_cast<Body*>(this->receptors.at(this->receptors.size()-1));
             break;
     }
-	//this->listOfPhysicalObjects.push_back(body);
-	//body = static_cast<Body*>(this->listOfPhysicalObjects.at(this->listOfPhysicalObjects.size()-1));
 	body->SetPosition(xPos, yPos);
 	return body;
 }
@@ -30,9 +28,14 @@ std::vector<PhysicalObject*>* World::GetListOfPhysicalObjects()
 	return &this->listOfPhysicalObjects;
 }
 
-std::vector<Body*>* World::GetListOfBodys()
+std::vector<BodyEmitter*>* World::getEmitters()
 {
-	return &this->listOfBodys;
+    return &this->emitters;
+}
+
+std::vector<BodyReceptor*>* World::getReceptors()
+{
+    return &this->receptors;
 }
 
 World::~World(void)
