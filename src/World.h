@@ -27,7 +27,7 @@ public:
 	World(void);
 
     // Creates a body with the given type
-	Body* CreateBody(BODY_TYPE bodyType);
+	Body* createBody(BODY_TYPE bodyType, float xPos, float yPos);
 	Wave* createWave(int id, float waveLength); //TODO: finish that
 
 	std::vector<PhysicalObject*>* GetListOfPhysicalObjects();

@@ -33,7 +33,7 @@ public:
     // Creates a body for the given agent at given position, then adds this agent to the list,
     void addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos);
 
-	void Run();
+	void run(int elapsedTime);
 
 	~Simulator(void);
 };

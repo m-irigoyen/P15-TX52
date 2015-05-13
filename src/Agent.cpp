@@ -18,3 +18,13 @@ void Agent::disconnect()
 {
 	this->body = NULL;
 }
+
+void Agent::setProblem(Problem* problem)
+{
+	this->problem = problem;
+}
+
+Problem* Agent::getProblem()
+{
+	return this->problem;
+}

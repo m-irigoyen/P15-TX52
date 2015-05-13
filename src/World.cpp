@@ -5,8 +5,7 @@ World::World(void)
 
 }
 
-//TODO: finish that
-Body* World::CreateBody(BODY_TYPE bodyType)
+Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 {
     Body* body;
     switch (bodyType)
@@ -20,6 +19,9 @@ Body* World::CreateBody(BODY_TYPE bodyType)
             this->receptors.push_back(body);
             break;
     }
+	//this->listOfPhysicalObjects.push_back(body);
+	//body = static_cast<Body*>(this->listOfPhysicalObjects.at(this->listOfPhysicalObjects.size()-1));
+	body->SetPosition(xPos, yPos);
 	return body;
 }
 

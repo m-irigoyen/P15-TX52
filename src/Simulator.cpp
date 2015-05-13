@@ -9,10 +9,12 @@ Simulator::Simulator()
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
 {
 	//TODO: finish that
-    //this->world.
+	Body* body = this->world.createBody(bodyType, xPos, yPos);
+	agent->connect(body);
+	this->agents.push_back(agent);
 }
 
-void Simulator::Run()
+void Simulator::run(int elapsedTime)
 {
 	std::chrono::system_clock::time_point start_time, end_time;
 	int eventID = 0;
@@ -20,6 +22,24 @@ void Simulator::Run()
 	while(eventID != 1)
 	{
 		start_time = std::chrono::high_resolution_clock::now();
+
+		//Updating physical objects
+		for (std::vector<PhysicalObject*>::iterator it = this->world.GetListOfPhysicalObjects()->begin();
+			it != this->world.GetListOfPhysicalObjects()->end();
+			++it)
+		{
+			(*it)->update(elapsedTime);
+		}
+
+		// Updating Bodies
+		for (std::vector<Body*>::iterator it = this->world.GetListOfBodys()->begin();
+			it != this->world.GetListOfBodys()->end();
+			++it)
+		{
+			(*it)->update(elapsedTime);
+		}
+
+		// Updating agents
 
 		eventID = this->SFMLView.CheckEvent();
 
