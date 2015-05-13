@@ -21,12 +21,15 @@ protected:
 	Problem* problem;
 
 public:
-	Agent(Problem* problem, Body* body = NULL);
+	Agent(Problem* problem = NULL, Body* body = NULL);
 
 	virtual void live() = 0;
 
 	virtual void connect(Body* body);
 	virtual void disconnect();
+
+	virtual void setProblem(Problem* problem);
+	Problem* getProblem();
 
 	~Agent(void);
 };
