@@ -20,7 +20,8 @@ class World
 {
 private:
 	std::vector<PhysicalObject*> listOfPhysicalObjects;
-	std::vector<Body*> listOfBodys;
+	std::vector<BodyEmitter*> listOfReceptors;
+	std::vector<BodyReceptor*> listOfEmitters;
 
 public:
 	World(void);

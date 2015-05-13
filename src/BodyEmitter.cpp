@@ -1,6 +1,6 @@
 #include "BodyEmitter.h"
 
-BodyEmitter::BodyEmitter(Semantic type, World* world) : BodyReceptor(type, world)
+BodyEmitter::BodyEmitter(Semantic type) : BodyReceptor(type)
 {
 }
 

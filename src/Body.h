@@ -17,7 +17,7 @@ class Body:  public PhysicalObject
 private:
 
 public:
-	Body(Semantic type, World* world);
+	Body(Semantic type);
 
 	virtual void update(int elapsedTime) = 0;
 

@@ -11,9 +11,6 @@
 *   PhysicalObjects are defined by their Semantic.
 */
 
-//Forward declaration
-class World;
-
 class PhysicalObject
 {
 protected:
@@ -21,10 +18,8 @@ protected:
 	float posX;
 	float posY;
 
-	World* world;
-
 public:
-	PhysicalObject(Semantic type, World* world);
+	PhysicalObject(Semantic type);
 
 	virtual void SetPosition(float x, float y);
 	virtual void GetPosition(float &x, float &y);

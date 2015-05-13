@@ -1,6 +1,6 @@
 #include "BodyReceptor.h"
 
-BodyReceptor::BodyReceptor(Semantic type, World* world) : Body(type, world)
+BodyReceptor::BodyReceptor(Semantic type) : Body(type)
 {
 
 }

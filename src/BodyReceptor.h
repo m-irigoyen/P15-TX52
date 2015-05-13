@@ -12,7 +12,7 @@ class BodyReceptor:  public Body
 private:
 
 public:
-	BodyReceptor(Semantic type, World* world);
+	BodyReceptor(Semantic type);
 
     Perception GetPerception();    // Returns a list of percieved waves
     virtual void update(int elapsedTime);
