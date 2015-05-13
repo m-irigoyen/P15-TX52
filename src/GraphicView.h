@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-#include "World.h""
+#include "World.h"
 
 /*
 *   The GraphicView is charged of visualizing the whole thing.
