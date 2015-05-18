@@ -1,0 +1,22 @@
+Projet en cours : pendule inversé
+Projet suivant : une simulation de population (YAY!)
+
+Amarre : 
+- Interface Graphique
+	- Propagation des ondes
+	- ? Graphe de visualisation d'une onde (attente de confirmation de Gechter)
+	- Visualisation du pendule inversé
+
+Proko : 
+- Ondes
+	- Implémenter la fonction createWave dans la classe World
+	- Stocker les waves dans un vector dans l'environnement
+	- Implémenter la fonction getPercetion dans les récepteurs
+* Pour les perceptions, changement de modèle : A chaque tour de boucle le World va parcourrir tous les Receptor et set leur perception. Donc dans le bodyReceptor, le getPerception va directement retourner ce que lui a donné le World.*
+
+Ythèr : 
+Pendule inversé
+	- Coder le pendule inversé
+	- Coder un getter des valeurs numériques (pour pouvoir les afficher)
+Agents
+	- Tester la réaction du programme en fonction de l'interprétation des données par les gens (C.a.d : est ce que ça marche mieux si on osef de la fréquence et on gère que l'amplitude, ou inversement, ou si on fait les deux? etcetc)

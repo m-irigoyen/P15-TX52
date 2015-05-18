@@ -10,6 +10,7 @@
 class BodyReceptor:  public Body
 {
 private:
+Perception perception;
 
 public:
 	BodyReceptor(Semantic type);

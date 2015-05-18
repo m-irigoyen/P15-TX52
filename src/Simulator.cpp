@@ -6,11 +6,14 @@ Simulator::Simulator()
 	this->SFMLView.Init(800, 800);
 
 	this->SFMLView.SetWorld(&this->world);
+
+    // FIXME: this is test code, remove it later
+	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 200,200);
+	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500,200);
 }
 
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
 {
-	//TODO: finish that
 	Body* body = this->world.createBody(bodyType, xPos, yPos);
 	agent->connect(body);
 	this->agents.push_back(agent);

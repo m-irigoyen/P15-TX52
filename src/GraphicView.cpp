@@ -29,6 +29,7 @@ void GraphicView::Draw()
 {
 	window->clear(sf::Color::Black);
 
+    //Receptors
 	std::vector<BodyReceptor*>* worldReceptors = this->world->getReceptors();
 	if (this->receptors.size() != worldReceptors->size())
 	{
@@ -37,7 +38,6 @@ void GraphicView::Draw()
 		{
 			this->receptors.push_back(sf::CircleShape(2));
 			this->receptors.at(this->receptors.size()-1).setFillColor(sf::Color(255, 0, 0));
-			//std::cout << "i = " << i << ", size = " << worldReceptors->size() << std::endl;
 		}
 	}
 
@@ -46,6 +46,25 @@ void GraphicView::Draw()
 		std::vector<float> pos = worldReceptors->at(idCurrentBody)->GetPosition();
 		this->receptors[idCurrentBody].setPosition(pos[0], pos[1]);
 		window->draw(this->receptors[idCurrentBody]);
+	}
+
+    //Emitters
+	std::vector<BodyEmitter*>* worldEmitters = this->world->getEmitters();
+	if (this->emitters.size() != worldEmitters->size())
+	{
+		this->emitters.clear();
+		for (int i=0; i < worldEmitters->size(); ++i)
+		{
+			this->emitters.push_back(sf::CircleShape(2));
+			this->emitters.at(this->emitters.size()-1).setFillColor(sf::Color(0, 255, 0));
+		}
+	}
+
+	for (int idCurrentBody=0; idCurrentBody < worldEmitters->size(); ++idCurrentBody)
+	{
+		std::vector<float> pos = worldEmitters->at(idCurrentBody)->GetPosition();
+		this->emitters[idCurrentBody].setPosition(pos[0], pos[1]);
+		window->draw(this->emitters[idCurrentBody]);
 	}
 
 	window->display();

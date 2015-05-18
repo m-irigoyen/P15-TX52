@@ -19,7 +19,7 @@ private:
 	World* world;
 	std::vector<sf::CircleShape> receptors;
 	std::vector<sf::CircleShape> emitters;
-
+	std::vector<sf::CircleShape> waves;
 public:
 	GraphicView(void);
 

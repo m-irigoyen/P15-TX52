@@ -5,7 +5,8 @@
 #include <chrono>
 #include <iostream>
 
-#include "Agent.h"
+#include "AgentEmitter.h"
+#include "AgentReceptor.h"
 #include "GraphicView.h"
 
 /*

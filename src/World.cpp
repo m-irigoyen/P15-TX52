@@ -23,6 +23,11 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 	return body;
 }
 
+Wave* World::createWave(int id, float waveLength) //TODO: finish that
+{
+
+}
+
 std::vector<PhysicalObject*>* World::GetListOfPhysicalObjects()
 {
 	return &this->listOfPhysicalObjects;

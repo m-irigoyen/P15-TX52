@@ -10,13 +10,16 @@ class Perception
 {
 private:
 	int m_waveId;   // The id of the wave percieved. (The id depends of the emitter)
-	float m_waveLength; // The wavelength percieved
+	float m_frequency; // The wavelength percieved
 
 public:
-	Perception(int waveId, float waveLength);
+    Perception();
+	Perception(int waveId, float frequency);
 
     int getWaveId();    // Gets the id of the wave percieved
-    float getWaveLength();  // Gets the lenght of the wave percieved
+    void setWaveId(int waveId);
+    float getFrequency();  // Gets the lenght of the wave percieved
+    void setFrequency(float frequency);
 };
 
 #endif

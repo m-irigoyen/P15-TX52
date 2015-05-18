@@ -4,7 +4,7 @@
 
 Wave::Wave(Semantic type) : PhysicalObject(type)
 {
-	
+
 }
 
 //Init
@@ -66,5 +66,5 @@ void Wave::setAmplitude(float a)
 
 void Wave::setNewFrequency(float f, int t)
 {
-	m_histories.push_back(new History(f, t));
+	m_histories.push_back(History(f, t));
 }
