@@ -21,7 +21,7 @@ enum BODY_TYPE
 class World
 {
 private:
-	std::vector<PhysicalObject*> listOfPhysicalObjects;
+	std::vector<Wave*> waves;
 	std::vector<BodyReceptor*> receptors;
 	std::vector<BodyEmitter*> emitters;
 
@@ -32,7 +32,7 @@ public:
 	Body* createBody(BODY_TYPE bodyType, float xPos, float yPos);
 	Wave* createWave(int id, float waveLength); //TODO: finish that
 
-	std::vector<PhysicalObject*>* GetListOfPhysicalObjects();
+	std::vector<Wave*>* getWaves();
 	std::vector<BodyEmitter*>* getEmitters();
 	std::vector<BodyReceptor*>* getReceptors();
 

@@ -28,9 +28,9 @@ Wave* World::createWave(int id, float waveLength) //TODO: finish that
 
 }
 
-std::vector<PhysicalObject*>* World::GetListOfPhysicalObjects()
+std::vector<Wave*>* World::getWaves()
 {
-	return &this->listOfPhysicalObjects;
+	return &this->waves;
 }
 
 std::vector<BodyEmitter*>* World::getEmitters()

@@ -28,9 +28,9 @@ void Simulator::run(int elapsedTime)
 	{
 		start_time = std::chrono::high_resolution_clock::now();
 
-		//Updating physical objects
-		for (std::vector<PhysicalObject*>::iterator it = this->world.GetListOfPhysicalObjects()->begin();
-			it != this->world.GetListOfPhysicalObjects()->end();
+		//Updating waves
+		for (std::vector<Wave*>::iterator it = this->world.getWaves()->begin();
+			it != this->world.getWaves()->end();
 			++it)
 		{
 			(*it)->update(elapsedTime);
