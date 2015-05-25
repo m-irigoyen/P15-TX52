@@ -18,6 +18,10 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
             this->receptors.push_back(new BodyReceptor(Semantic(Tags::receptor)));
             body = static_cast<Body*>(this->receptors.at(this->receptors.size()-1));
             break;
+	default:	// If that happens, something's wrong
+		std::cout << "ERROR : body creation : unknown bodyType" << endl;
+		this->receptors.push_back(new BodyReceptor(Semantic(Tags::receptor)));
+		body = static_cast<Body*>(this->receptors.at(this->receptors.size() - 1));
     }
 	body->SetPosition(xPos, yPos);
 	return body;
@@ -25,7 +29,7 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 
 Wave* World::createWave(int id, float waveLength) //TODO: finish that
 {
-
+	return NULL;
 }
 
 std::vector<Wave*>* World::getWaves()
