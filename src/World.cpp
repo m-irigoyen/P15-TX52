@@ -27,9 +27,57 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 	return body;
 }
 
-Wave* World::createWave(int id, float waveLength) //TODO: finish that
+/*
+	This function create a new wave
+	Return type : Wave*
+
+	x				X position for the wave
+	y				Y position for the wave
+	radius			radius value for the wave
+	frequency		frequency value for the wave
+	speed			speed value for the wave
+	amplitude		amplitude value for the wave
+*/
+
+Wave* World::createWave(float x, float y, float radius, float frequency, float speed, float amplitude)
 {
-	return NULL;
+
+	// Create a wave
+	Wave * wave = new Wave(Semantic(Tags::wave));
+	// Initialize the wave
+	wave->initWave(x, y, radius, frequency, speed, amplitude);
+
+	// return it
+	return wave;
+}
+
+/*
+Update each element conainted in the world at each execution loop (based on the time not the frame)
+Return : void
+*/
+void World::update()
+{
+	int cursor;
+
+	for (cursor = 0; cursor < waves.size(); ++cursor)
+	{
+		//TODO : Add the elasped time
+		//waves.at(cursor)->update();
+	}
+
+	for (cursor = 0; cursor < receptors.size(); ++cursor)
+	{
+		updateReceptor(receptors.at(cursor));
+	}
+}
+
+/*
+For a specific receptor, look for each wave colliding with it, then set the receptor in consequences
+*/
+void World::updateReceptor(BodyReceptor* receptor)
+{
+	//TODO get the perception for the receptor
+	//TODO set the body in function of its perception
 }
 
 std::vector<Wave*>* World::getWaves()

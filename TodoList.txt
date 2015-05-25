@@ -6,11 +6,13 @@ Amarre :
 	- Propagation des ondes
 	- ? Graphe de visualisation d'une onde (attente de confirmation de Gechter)
 	- Visualisation du pendule inversé
-
+	- Rajouter les paramètres de gestion du temps dans la classe world
+	
 Proko : 
 - Ondes
-	- Implémenter la fonction createWave dans la classe World
-	- Stocker les waves dans un vector dans l'environnement
+	OK - Implémenter la fonction createWave dans la classe World
+	OK (à priori) - Stocker les waves dans un vector dans l'environnement
+	OK - Implémenter la fonction update
 	- Implémenter la fonction getPercetion dans les récepteurs
 * Pour les perceptions, changement de modèle : A chaque tour de boucle le World va parcourrir tous les Receptor et set leur perception. Donc dans le bodyReceptor, le getPerception va directement retourner ce que lui a donné le World.*
 

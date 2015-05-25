@@ -30,7 +30,14 @@ public:
 
     // Creates a body with the given type
 	Body* createBody(BODY_TYPE bodyType, float xPos, float yPos);
-	Wave* createWave(int id, float waveLength); //TODO: finish that
+	// Creates a wave 
+	Wave* createWave(float x, float y, float radius, float frequency, float speed, float amplitude);
+
+	// Update the world
+	void update();
+
+	//Update a receptor in function of its perception
+	void updateReceptor(BodyReceptor* receptor);
 
 	std::vector<Wave*>* getWaves();
 	std::vector<BodyEmitter*>* getEmitters();

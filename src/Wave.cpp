@@ -68,3 +68,18 @@ void Wave::setNewFrequency(float f, int t)
 {
 	m_histories.push_back(History(f, t));
 }
+
+//Other
+/*
+Each loop of the physics engine, the wave increase its radius by a value corresponding to its speed and the elapsed time
+return : void
+
+elapsedTime			: int		// Time elapsed since the last loop (in ms)
+*/
+void Wave::update(int elapsedTime)
+{
+	float newRadius;
+	newRadius = m_radius + m_speed * (elapsedTime / 1000);
+
+	setRadius(newRadius);
+}

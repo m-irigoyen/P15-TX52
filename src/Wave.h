@@ -29,6 +29,9 @@ public :
 	void setAmplitude(float a);
 	void setNewFrequency(float f, int t);
 
+	//Other
+	void update(int elapsedTime);
+
 private :
 	float m_radius;
 	float m_frequency;

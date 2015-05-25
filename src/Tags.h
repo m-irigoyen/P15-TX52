@@ -8,6 +8,7 @@ class Tags
 public:
 	static const std::string emitter;
 	static const std::string receptor;
+	static const std::string wave;
 };
 
 #endif
