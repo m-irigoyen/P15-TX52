@@ -1,31 +1,43 @@
 #include "Perception.h"
 
-Perception::Perception() : m_waveId(0), m_frequency(0.0f)
+Perception::Perception()
 {
 
 }
 
-Perception::Perception(int waveId, float frequency) : m_waveId(waveId), m_frequency(frequency)
+// Adds that new wave to the list
+void Perception::addNewWave(int emitterId, sf::Time contact, float amplitude)
 {
+	std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = this->percievedWaves.find(emitterId);
+	if (it != this->percievedWaves.end())
+	{
+		// A wave with that id already exists
+		//TODO: merge the stuff
+		std::cout << "Perception::addNewWave : found corresponding id" << std::endl;
+		sf::Time tempFrequency = contact - it->second.first;	// Calculating frequency for given wave
+		it->second.second.first = tempFrequency.asSeconds();	// Setting frequency
+		it->second.second.second = amplitude;
+	}
+	else
+	{
+		this->percievedWaves.insert
+			(
+			std::pair<int, std::pair<sf::Time, std::pair<float, float>>>(emitterId, std::pair<sf::Time, std::pair<float, float>>(contact, std::pair<float, float>(-1.0f, amplitude)))
+			);
 
+		std::cout << "Perception::addNewWave : first time encountering this id" << std::endl;
+	}
 }
 
-void Perception::setWaveId(int waveId)
+// Removes given id from the list
+void Perception::removeWave(int emitterId)
 {
-    m_waveId = waveId;
+	std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = this->percievedWaves.find(emitterId);
+	if (it != this->percievedWaves.end())
+		this->percievedWaves.erase(it);
 }
 
-int Perception::getWaveId()
+std::map<int, std::pair<sf::Time, std::pair<float, float>>>* Perception::getWaves()
 {
-    return m_waveId;
-}
-
-float Perception::getFrequency()
-{
-    return m_frequency;
-}
-
-void Perception::setFrequency(float frequency)
-{
-    m_frequency = frequency;
+	return &this->percievedWaves;
 }

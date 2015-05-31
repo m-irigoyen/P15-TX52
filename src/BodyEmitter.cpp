@@ -1,16 +1,16 @@
 #include "BodyEmitter.h"
 
-BodyEmitter::BodyEmitter(Semantic type) : Body(type)
+BodyEmitter::BodyEmitter(Semantic type, float x, float y) : Body(type,x,y), Emitter()
 {
 }
 
-//TODO: finish that
-void BodyEmitter::send(float frequency, float amplitude)
+void BodyEmitter::initialise()
 {
 
 }
 
-void BodyEmitter::update(int elapsedTime)
+
+void BodyEmitter::update(sf::Time elapsedTime)
 {
 
 }

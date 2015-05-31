@@ -28,13 +28,18 @@ private:
 	std::vector<Agent*> agents; // All the agents
     Problem* problem;   // The instance of the Problem.
 
+	sf::Clock simulationClock;
+	bool finishSimulation;
+	bool frameFlag;
+
 public:
 	Simulator();
 
     // Creates a body for the given agent at given position, then adds this agent to the list,
     void addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos);
 
-	void run(int elapsedTime);
+	void checkEvents();	// Check simulation events
+	void run(sf::Time refreshRate);
 
 	~Simulator(void);
 };

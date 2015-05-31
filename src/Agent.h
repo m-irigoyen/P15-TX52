@@ -1,7 +1,8 @@
 #ifndef AGENT_H_
 #define AGENT_H_
 
-#include "Body.h"
+#include "BodyEmitter.h"
+#include "BodyReceptor.h"
 #include "Problem.h"
 
 /*

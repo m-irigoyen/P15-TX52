@@ -1,14 +1,20 @@
 #include "PhysicalObject.h"
 
+int PhysicalObject::nextId = 0;
 
-PhysicalObject::PhysicalObject(Semantic type) : type(type)
+PhysicalObject::PhysicalObject(Semantic type, float x, float y) : type(type), posX(x), posY(y), id(nextId)
 {
-
+	++nextId;
 }
 
 
 PhysicalObject::~PhysicalObject(void)
 {
+}
+
+int PhysicalObject::getId()
+{
+	return id;
 }
 
 void PhysicalObject::SetPosition(float x, float y)

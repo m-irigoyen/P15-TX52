@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "PhysicalObject.h"
-#include "History.h"
 
 using namespace std;
 
@@ -13,31 +12,31 @@ class Wave : public PhysicalObject
 {
 public :
 	//Constructor
-	Wave(Semantic type);
-	//Init
-	void initWave(float x, float y, float r, float f, float s, float a);
+	Wave(Semantic type, float x, float y, int emitterId, float speed, float amplitude);
+	
+
 	//Getter
-	float getRadius();
-	float getFrequency();
-	float getSpeed();
 	float getAmplitude();
-	vector<History> getHistory();
-	//Setter
-	void setRadius(float r);
-	void setFrequency(float f);
-	void setSpeed(float s);
-	void setAmplitude(float a);
-	void setNewFrequency(float f, int t);
+	float getSpeed();
+	float getRadius();
+	int getEmitterId();
+	
+	float setRadius(float r);
 
 	//Other
-	void update(int elapsedTime);
+	void update(sf::Time elapsedTime);
+
+	// Encountered receptors
+	bool hasCollided(int receptorId);
+	void onCollisionEvent(int receptorId);
 
 private :
 	float m_radius;
-	float m_frequency;
-	float m_speed;
-	float m_amplitude;
-	vector<History> m_histories;
+	const float m_speed;
+	const float m_amplitude;
+	const int emitterId;
+
+	std::vector<int> collidedReceptors;
 };
 
 #endif

@@ -30,7 +30,7 @@ void GraphicView::Draw()
 	window->clear(sf::Color::Black);
 
 	//Waves (not finished)
-	/*std::vector<Wave*>* waves = this->world->getWaves();
+	std::vector<Wave*>* waves = this->world->getWaves();
     if (this->waves.size() != waves->size())
 	{
         this->waves.clear();
@@ -38,19 +38,19 @@ void GraphicView::Draw()
 		{
 			this->waves.push_back(sf::CircleShape(WAVE_SIZE));
 			this->waves.at(this->waves.size()-1).setFillColor(sf::Color(0, 0, 0, 0));
-			this->waves.at(this->waves.size()-1).setBorderColor(sf::Color(0, 0, 255));
+			this->waves.at(this->waves.size()-1).setOutlineColor(sf::Color(0, 0, 255));
 		}
 	}
 
     int cpt = 0;
-	for (int idCurrentWave=0; idCurrentWave < waves->size(); ++idCurrentBody)
+	for (int idCurrentWave = 0; idCurrentWave < waves->size(); ++idCurrentWave)
 	{
 		std::vector<float> pos = waves->at(idCurrentWave)->GetPosition();
 		this->waves[idCurrentWave].setPosition(pos[0], pos[1]);
-		//TODO: set radius
+		this->waves[idCurrentWave].setRadius(waves->at(idCurrentWave)->getRadius());
 		window->draw(this->waves[idCurrentWave]);
 		++cpt;
-	}*/
+	}
 
     //Receptors
 	std::vector<BodyReceptor*>* worldReceptors = this->world->getReceptors();

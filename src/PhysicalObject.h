@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Semantic.h"
+#include "SFML\System\Time.hpp"
 
 /*
 *   The PhysicalObject is the main class for all the object in the simulation.
@@ -18,8 +19,13 @@ protected:
 	float posX;
 	float posY;
 
+	const int id;
+	static int nextId;
+
 public:
-	PhysicalObject(Semantic type);
+	PhysicalObject(Semantic type, float x, float y);
+
+	int getId();
 
 	virtual void SetPosition(float x, float y);
 	virtual void GetPosition(float &x, float &y);
@@ -30,7 +36,7 @@ public:
 
     //TODO: adapt that "dt" with the chrono system from Golé
     // updates the object every frame
-	virtual void update(int elapsedTime) = 0;
+	virtual void update(sf::Time elapsedTime) = 0;
 
 	~PhysicalObject(void);
 };

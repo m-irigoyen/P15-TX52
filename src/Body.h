@@ -17,7 +17,7 @@ class Body:  public PhysicalObject
 private:
 
 public:
-	Body(Semantic type);
+	Body(Semantic type, float x, float y);
 
 	virtual void update(int elapsedTime) = 0;
 

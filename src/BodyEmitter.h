@@ -1,23 +1,26 @@
 #ifndef BODYEMITTER_H_
 #define BODYEMITTER_H_
 
-#include "Body.h"
-
+// This is an interface
 /*
 *	Emitters can send waves in the world.
 */
 
-class BodyEmitter:  public Body
+#include "Body.h"
+#include "Emitter.h"
+
+
+//FIXME : Problem of refresh rate to send waves. Maybe add a timeToSend in send, so the world can already place the wave at the correct position accounting for the time that has passed
+class BodyEmitter : public Body, public Emitter
 {
-private:
-
 public:
-	BodyEmitter(Semantic type);
+	BodyEmitter(Semantic type, float x, float y);
 
-    void send(float frequency, float amplitude);
-    virtual void update(int elapsedTime);
+	virtual void initialise();
 
-	~BodyEmitter(void);
+	// Body methods
+    virtual void update(sf::Time elapsedTime);
+
 };
 
 #endif

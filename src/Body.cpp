@@ -1,11 +1,9 @@
 #include "Body.h"
 
 
-Body::Body(Semantic type) : PhysicalObject(type)
+Body::Body(Semantic type, float x, float y) : PhysicalObject(type, x, y)
 {
-	this->type = type;
-	this->posX = rand()%800;
-	this->posY = rand()%800;
+
 }
 
 

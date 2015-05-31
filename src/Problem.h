@@ -8,7 +8,7 @@
 class Problem
 {
 public:
-	virtual void run(int elapsedTime) = 0;
+	virtual void run(sf::Time elapsedTime) = 0;
 };
 
 #endif

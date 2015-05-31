@@ -1,18 +1,13 @@
 #include "BodyReceptor.h"
 
-BodyReceptor::BodyReceptor(Semantic type) : Body(type)
+BodyReceptor::BodyReceptor(Semantic type, float x, float y) : Body(type,x,y)
 {
 
 }
 
-    // Returns a list of percieved waves
-Perception BodyReceptor::GetPerception()
-{
-	//TODO:
-	return Perception(0, 0.0f);
-}
+   
 
-void BodyReceptor::update(int elapsedTime)
+void BodyReceptor::update(sf::Time elapsedTime)
 {
 
 }
