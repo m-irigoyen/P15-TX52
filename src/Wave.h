@@ -21,7 +21,7 @@ public :
 	float getRadius();
 	int getEmitterId();
 	
-	float setRadius(float r);
+	void setRadius(float r);
 
 	//Other
 	void update(sf::Time elapsedTime);

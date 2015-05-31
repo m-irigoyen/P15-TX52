@@ -39,14 +39,11 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 	amplitude		amplitude value for the wave
 */
 
-Wave* World::createWave(float x, float y, float radius, float frequency, float speed, float amplitude)
+Wave* World::createWave(float x, float y, int emitterId, float speed, float amplitude)
 {
 
 	// Create a wave
-	Wave * wave = new Wave(Semantic(Tags::wave));
-	// Initialize the wave
-	wave->initWave(x, y, radius, frequency, speed, amplitude);
-
+	Wave * wave = new Wave(Semantic(Tags::wave), x, y, emitterId, speed, amplitude);
 	this->waves.push_back(wave);
 
 	// return it

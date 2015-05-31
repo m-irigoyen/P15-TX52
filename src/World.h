@@ -39,7 +39,7 @@ public:
     // Creates a body with the given type
 	Body* createBody(BODY_TYPE bodyType, float xPos, float yPos);
 	// Creates a wave 
-	Wave* createWave(float x, float y, float radius, float frequency, float speed, float amplitude);
+	Wave* createWave(float x, float y, int emitterId, float speed, float amplitude);
 
 	// Update the world
 	void update(sf::Time elapsedTime);

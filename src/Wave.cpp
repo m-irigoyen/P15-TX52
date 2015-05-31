@@ -43,7 +43,7 @@ void Wave::update(sf::Time elapsedTime)
 	setRadius(newRadius);
 }
 
-float Wave::setRadius(float r)
+void Wave::setRadius(float r)
 {
 	this->m_radius = r;
 }
