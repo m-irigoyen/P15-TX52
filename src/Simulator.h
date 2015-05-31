@@ -27,6 +27,7 @@ private:
 	World world;    // The environment
 	std::vector<Agent*> agents; // All the agents
     Problem* problem;   // The instance of the Problem.
+	sf::RenderWindow* window;
 
 	sf::Clock simulationClock;
 	bool finishSimulation;

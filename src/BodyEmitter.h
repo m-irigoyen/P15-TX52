@@ -20,7 +20,6 @@ public:
 
 	// Body methods
     virtual void update(sf::Time elapsedTime);
-
 };
 
 #endif

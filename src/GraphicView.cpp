@@ -98,6 +98,11 @@ void GraphicView::SetWorld(World* world)
 	this->world = world;
 }
 
+sf::RenderWindow* GraphicView::getWindow()
+{
+	return this->window;
+}
+
 GraphicView::~GraphicView(void)
 {
 	this->window->clear();

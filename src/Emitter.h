@@ -19,7 +19,6 @@ private:
 	float currentAmplitude;
 	float currentFrequency;	// This is in hertz
 	float currentSpeed;
-	
 
 public:
 	Emitter();

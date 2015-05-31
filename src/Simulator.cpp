@@ -1,11 +1,12 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : finishSimulation(false), frameFlag(true),
+Simulator::Simulator() : finishSimulation(false), frameFlag(true), world(&simulationClock)
 {
 	this->SFMLView.Init(800, 800);
 
 	this->SFMLView.SetWorld(&this->world);
+	this->window = this->SFMLView.getWindow();
 
     // FIXME: this is test code, remove it later
 	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 200,200);
@@ -71,4 +72,31 @@ void Simulator::run(sf::Time refreshRate)
 
 Simulator::~Simulator(void)
 {
+}
+
+// Check simulation events
+void Simulator::checkEvents()
+{
+	// Checking for window events
+	sf::Event event;
+	while (this->window->pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+		{
+			this->window->close();
+			finishSimulation = true;
+		}
+	}
+
+	// Checking user input
+	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		// Left click : painting the map
+		sf::Vector2i pixelPos = sf::Mouse::getPosition(*this->window);
+		sf::Vector2f worldPos = this->window->mapPixelToCoords(pixelPos);
+		int x, y;
+		this->SFMLView.convertCoordinates_worldToTiles(static_cast<int>(worldPos.x), static_cast<int>(worldPos.y), x, y);
+
+		applyUserAction(this->SFMLView.getUserAction(), x, y);
+	}*/
 }

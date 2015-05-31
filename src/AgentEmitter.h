@@ -10,7 +10,7 @@
 class AgentEmitter : public Agent
 {
 protected:
-
+	
 public:
 	AgentEmitter(Problem* problem, Body* body = NULL);
 

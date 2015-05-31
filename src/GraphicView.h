@@ -31,6 +31,8 @@ public:
 	int CheckEvent();
 	void Draw();
 
+	sf::RenderWindow* getWindow();
+
 	void SetWorld(World* world);
 
 	~GraphicView(void);
