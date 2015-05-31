@@ -20,10 +20,13 @@ public:
 	//Receptor functions
 	virtual void initialise() = 0;	// Initialises the receptor
 	virtual WAVE_COMPOSITION getPerception() = 0;    // Returns what the receptor can make of all it has recieved. #PHYSICS STUFF
+	virtual float calculateValueAtT(sf::Time t) = 0;
+	virtual std::vector<float> computePercievedWave(sf::Time start, sf::Time duration, int precision) = 0;	//! Precision = how many points to compute
+
+	virtual void updateComputedValues() = 0;
 
 	//Body functions
     virtual void update(sf::Time elapsedTime) = 0;
-
 };
 
 #endif

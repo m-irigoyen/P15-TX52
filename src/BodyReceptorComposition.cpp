@@ -17,7 +17,7 @@ void BodyReceptorComposition::initialise()
 // Returns what the receptor can make of all it has recieved. #PHYSICS STUFF
 WAVE_COMPOSITION BodyReceptorComposition::getPerception()
 {
-	// Make the algorithm a hell of a lot better than that
+	// TODO: Make the algorithm a hell of a lot better than that
 
 	for (std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = this->perception.getWaves()->begin();
 		it != this->perception.getWaves()->end();
@@ -30,6 +30,23 @@ WAVE_COMPOSITION BodyReceptorComposition::getPerception()
 		}
 	}
 	return this->currentPerception;
+}
+
+float BodyReceptorComposition::calculateValueAtT(sf::Time t)
+{
+	return -1.0f;
+}
+
+	//! Precision = how many points to compute
+std::vector<float> BodyReceptorComposition::computePercievedWave(sf::Time start, sf::Time duration, int precision)
+{
+	std::vector<float> test;
+	return test;
+}
+
+void BodyReceptorComposition::updateComputedValues()
+{
+
 }
 
 //Body functions

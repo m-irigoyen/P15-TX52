@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <map>
+#include<vector>
 #include "SFML\System\Time.hpp"
 
 struct WAVE_COMPOSITION
@@ -26,6 +27,7 @@ private:
 		emitterId = firstContact, frequency, amplitude
 	*/
 	std::map<int, std::pair<sf::Time, std::pair<float, float>>> percievedWaves;
+	std::vector<float> computedValues;
 
 
 public:

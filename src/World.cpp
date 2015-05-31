@@ -11,16 +11,16 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
     switch (bodyType)
     {
 	case BODY_TYPE::EMITTER :
-            this->emitters.push_back(new BodyEmitter(Semantic(Tags::emitter)));
+		this->emitters.push_back(new BodyEmitter(Semantic(Tags::emitter), xPos, yPos));
             body = static_cast<Body*>(this->emitters.at(this->emitters.size()-1));
             break;
 	case BODY_TYPE::RECEPTOR :
-            this->receptors.push_back(new BodyReceptorComposition(Semantic(Tags::receptor)));
+            this->receptors.push_back(new BodyReceptorComposition(Semantic(Tags::receptor),xPos,yPos));
             body = static_cast<Body*>(this->receptors.at(this->receptors.size()-1));
             break;
 	default:	// If that happens, something's wrong
 		std::cout << "ERROR : body creation : unknown bodyType" << endl;
-		this->receptors.push_back(new BodyReceptorComposition(Semantic(Tags::receptor)));
+		this->receptors.push_back(new BodyReceptorComposition(Semantic(Tags::receptor), xPos, yPos));
 		body = static_cast<Body*>(this->receptors.at(this->receptors.size() - 1));
     }
 	body->SetPosition(xPos, yPos);
@@ -88,29 +88,14 @@ void World::update(sf::Time elapsedTime)
 		++it)
 	{
 		(*it)->update(elapsedTime);
-		(*it)->
-	}
-
-
-	//FIXME : remove that
-	int cursor;
-
-	for (cursor = 0; cursor < waves.size(); ++cursor)
-	{
-		//TODO : Add the elasped time
-		//waves.at(cursor)->update();
-	}
-
-	for (cursor = 0; cursor < receptors.size(); ++cursor)
-	{
-		updateReceptor(receptors.at(cursor));
+		setPerception((*it));
 	}
 }
 
 /*
 For a specific receptor, look for each wave colliding with it, then set the receptor in consequences
 */
-void World::updateReceptor(BodyReceptor* receptor)
+void World::setPerception(BodyReceptor* receptor)
 {
 	//TODO get the perception for the receptor
 	//TODO set the body in function of its perception

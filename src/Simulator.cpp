@@ -1,7 +1,7 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : finishSimulation(false), frameFlag(true)
+Simulator::Simulator() : finishSimulation(false), frameFlag(true),
 {
 	this->SFMLView.Init(800, 800);
 

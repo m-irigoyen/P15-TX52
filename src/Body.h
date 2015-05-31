@@ -19,7 +19,7 @@ private:
 public:
 	Body(Semantic type, float x, float y);
 
-	virtual void update(int elapsedTime) = 0;
+	virtual void update(sf::Time elapsedTime) = 0;
 
 	~Body(void);
 };

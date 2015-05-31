@@ -45,7 +45,7 @@ public:
 	void update(sf::Time elapsedTime);
 
 	//Update a receptor in function of its perception
-	void updateReceptor(BodyReceptor* receptor);
+	void setPerception(BodyReceptor* receptor);
 
 	std::vector<Wave*>* getWaves();
 	std::vector<BodyEmitter*>* getEmitters();

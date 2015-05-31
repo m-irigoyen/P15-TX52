@@ -1,7 +1,7 @@
 #ifndef BODYHYBRID_H_
 #define BODYHYBRID_H_
 
-"
+
 
 /*
 *	Emitter + receptor
