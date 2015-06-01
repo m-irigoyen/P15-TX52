@@ -1,12 +1,21 @@
 #include "AgentEmitter.h"
 
-AgentEmitter::AgentEmitter(Problem* problem, Body* body) : Agent(problem, body)
+AgentEmitter::AgentEmitter(Problem* problem, Body* body = NULL, state = 0) : Agent(problem, body)
 {
-	castBody = static_cast<BodyEmitter*>(body);
+    this->state = state;
 }
 
 void AgentEmitter::live()
 {
-	BodyEmitter* temp = dynamic_cast<BodyEmitter*>(body); 
-	temp->send(1, 1);
+    double amplitude = 0;
+    switch(this->state){
+        case 0:
+            amplitude = ((Pendulum)*this->problem).getSpeed();
+            break;
+        case 1:
+            amplitude = ((Pendulum)*this->problem).getAngle();
+            break;
+    }
+
+    ((BodyEmitter)*body).send(amplitude,2.0);
 }
