@@ -10,9 +10,10 @@
 class AgentEmitter : public Agent
 {
 protected:
-	
+    int state;
+
 public:
-	AgentEmitter(Problem* problem, Body* body = NULL);
+	AgentEmitter(Problem* problem, Body* body = NULL, state = 0);
 
 	virtual void live();
 
