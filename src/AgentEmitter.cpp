@@ -1,4 +1,5 @@
 #include "AgentEmitter.h"
+#define FREQUENCY 2.0
 
 AgentEmitter::AgentEmitter(Problem* problem, BodyEmitter* body) : Agent(problem, body), castedBody(body)
 {
