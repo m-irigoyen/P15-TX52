@@ -27,7 +27,6 @@ public:
 	virtual void send(float frequency, float amplitude, float speed = -1.0f);
 
 	/**
-	*	Call that function inside the update function of a body.
 	*	This will check if the emitter is sending, and if it is, if a new peak needs to be sent. (And if that is the case, it'll send it for you)
 	*/
 	virtual bool checkForSend(sf::Time currentTime);

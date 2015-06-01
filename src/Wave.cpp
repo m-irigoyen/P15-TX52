@@ -2,7 +2,7 @@
 
 //Constructor
 
-Wave::Wave(Semantic type, float x, float y, int emitterId, float speed, float amplitude) : PhysicalObject(type, x, y), emitterId(emitterId), m_speed(speed), m_amplitude(amplitude)
+Wave::Wave(Semantic type, float x, float y, int emitterId, float speed, float amplitude) : PhysicalObject(type, x, y), emitterId(emitterId), m_speed(speed), m_amplitude(amplitude), m_radius(0.0f)
 {
 
 }
@@ -41,6 +41,7 @@ void Wave::update(sf::Time elapsedTime)
 	newRadius = m_radius + m_speed * (elapsedTime.asSeconds());
 
 	setRadius(newRadius);
+
 }
 
 void Wave::setRadius(float r)

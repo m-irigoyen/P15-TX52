@@ -29,6 +29,8 @@ private:
 	std::map<int, std::pair<sf::Time, std::pair<float, float>>> percievedWaves;
 	std::vector<float> computedValues;
 
+	std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator findByTime(sf::Time t);
+
 
 public:
     Perception();

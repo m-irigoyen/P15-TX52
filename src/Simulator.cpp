@@ -7,10 +7,14 @@ Simulator::Simulator() : finishSimulation(false), frameFlag(true), world(&simula
 
 	this->SFMLView.SetWorld(&this->world);
 	this->window = this->SFMLView.getWindow();
+	
+	init();
+}
 
-    // FIXME: this is test code, remove it later
-	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 200,200);
-	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500,200);
+void Simulator::init()
+{
+	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 200, 200);
+	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 200);
 }
 
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
@@ -36,10 +40,10 @@ void Simulator::run(sf::Time refreshRate)
 		{
 			this->frameFlag = false;
 			startTime = simulationClock.getElapsedTime(); 
-			std::cout << endl << "Simulator::Run : STARTING FRAME" << endl;
+			//std::cout << endl << "Simulator::Run : STARTING FRAME" << endl;
 
 			// UPDATE STUFF
-			this->world.update(refreshRate);
+			this->world.update(refreshRate, startTime);
 
 			// Updating agents
 			int nbAgents = static_cast<int>(agents.size());
@@ -53,9 +57,12 @@ void Simulator::run(sf::Time refreshRate)
 			endTime = simulationClock.getElapsedTime();
 			sf::Time frameTime = endTime - startTime;
 
-			std::cout << "frame time : " << frameTime.asMilliseconds() << " ms, waiting " << refreshRate.asMilliseconds() - frameTime.asMilliseconds() << " ms" << std::endl;
+			/*if (frameTime.asMilliseconds() > 17)
+				std::cout << "frame time : " << frameTime.asMilliseconds() << " ms, threshold was " << 1/30 << "ms" << std::endl;*/
 
-			std::cout << "Simulator::Run : FRAME ENDED" << endl;
+			//std::cout << "frame time : " << frameTime.asMilliseconds() << " ms, waiting " << refreshRate.asMilliseconds() - frameTime.asMilliseconds() << " ms" << std::endl;
+
+			//std::cout << "Simulator::Run : FRAME ENDED" << endl;
 		}
 		else
 		{

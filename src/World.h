@@ -9,6 +9,8 @@
 #include "Wave.h"
 #include <math.h>
 
+#define DEFAULT_PROPAGATION_SPEED 100.0f;
+
 /*
 *   The World is the environment. It contains a list of all the PhysicalObjects that exist in it.
 */
@@ -27,11 +29,17 @@ private:
 	std::vector<BodyEmitter*> emitters;
 
 	void checkCollisionEvents(Wave* wave, sf::Time elapsedTime); 
+	void checkWaveCreation(BodyEmitter* emitter);
 	bool distanceCheck(float x1, float y1, float x2, float y2, float minDistance, float maxDistance);
+	void updateMaxWaveDistance();	// Calculates and sets the max wave distance
+
+	float calculateDistance(float x1, float y1, float x2, float y2);
+	float calculateDistance(std::vector<float> pos1, std::vector<float> pos2);
 
 	float maxWaveDistance;	// Biggest distance in the world between an emitter and receptor. Passed that distance, all waves are destroyed
 
 	sf::Clock* simulationClock;
+	sf::Time currentFrameTime;
 
 public:
 	World(sf::Clock* clock);
@@ -40,9 +48,10 @@ public:
 	Body* createBody(BODY_TYPE bodyType, float xPos, float yPos);
 	// Creates a wave 
 	Wave* createWave(float x, float y, int emitterId, float speed, float amplitude);
+	Wave* createWave(std::vector<float> position, int emitterId, float speed, float amplitude);
 
 	// Update the world
-	void update(sf::Time elapsedTime);
+	void update(sf::Time elapsedTime, sf::Time currentFrameTime);
 
 	//Update a receptor in function of its perception
 	void setPerception(BodyReceptor* receptor);

@@ -8,9 +8,13 @@
 
 #include "World.h"
 
-#define RECEPTOR_SIZE 5
-#define EMITTER_SIZE 5
+#define RECEPTOR_SIZE 6
+#define EMITTER_SIZE 6
 #define WAVE_SIZE 2
+
+//#define SKIP_WAVES 
+//#define SKIP_EMITTERS 
+//#define SKIP_RECEPTORS
 
 /*
 *   The GraphicView is charged of visualizing the whole thing.

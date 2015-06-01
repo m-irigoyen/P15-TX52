@@ -29,6 +29,9 @@ public:
 
 	virtual void SetPosition(float x, float y);
 	virtual void GetPosition(float &x, float &y);
+	virtual float getX();
+	virtual float getY();
+
 	virtual std::vector<float> GetPosition();
 
 	virtual void SetSemantic(Semantic type);
@@ -42,3 +45,4 @@ public:
 };
 
 #endif
+

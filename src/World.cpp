@@ -1,6 +1,6 @@
 #include "World.h"
 
-World::World(sf::Clock* clock) : simulationClock(clock)
+World::World(sf::Clock* clock) : simulationClock(clock), maxWaveDistance(0.0f)
 {
     this->receptors.clear();
 }
@@ -8,22 +8,25 @@ World::World(sf::Clock* clock) : simulationClock(clock)
 Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 {
     Body* body;
+	BodyReceptorComposition* tempBodyReceptor;
+	BodyEmitter* tempBodyEmitter;
     switch (bodyType)
     {
 	case BODY_TYPE::EMITTER :
-		this->emitters.push_back(new BodyEmitter(Semantic(Tags::emitter), xPos, yPos));
-            body = static_cast<Body*>(this->emitters.at(this->emitters.size()-1));
-            break;
+		tempBodyEmitter = new BodyEmitter(Semantic(Tags::emitter), xPos, yPos);
+		body = tempBodyEmitter;
+		this->emitters.push_back(tempBodyEmitter);
+        break;
 	case BODY_TYPE::RECEPTOR :
-            this->receptors.push_back(new BodyReceptorComposition(Semantic(Tags::receptor),xPos,yPos));
-            body = static_cast<Body*>(this->receptors.at(this->receptors.size()-1));
-            break;
-	default:	// If that happens, something's wrong
-		std::cout << "ERROR : body creation : unknown bodyType" << endl;
-		this->receptors.push_back(new BodyReceptorComposition(Semantic(Tags::receptor), xPos, yPos));
-		body = static_cast<Body*>(this->receptors.at(this->receptors.size() - 1));
+		tempBodyReceptor = new BodyReceptorComposition(Semantic(Tags::receptor), xPos, yPos);
+		body = tempBodyReceptor;
+		this->receptors.push_back(tempBodyReceptor);
+        break;
     }
-	body->SetPosition(xPos, yPos);
+
+	//updating maxWaveDistance
+	updateMaxWaveDistance();
+
 	return body;
 }
 
@@ -41,7 +44,8 @@ Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 
 Wave* World::createWave(float x, float y, int emitterId, float speed, float amplitude)
 {
-
+	if (speed == -1.0f)
+		speed = DEFAULT_PROPAGATION_SPEED;
 	// Create a wave
 	Wave * wave = new Wave(Semantic(Tags::wave), x, y, emitterId, speed, amplitude);
 	this->waves.push_back(wave);
@@ -50,19 +54,25 @@ Wave* World::createWave(float x, float y, int emitterId, float speed, float ampl
 	return wave;
 }
 
+Wave* World::createWave(std::vector<float> position, int emitterId, float speed, float amplitude)
+{
+	return createWave(position.at(0), position.at(1), emitterId, speed, amplitude);
+}
+
 /*
 Update each element contained in the world at each execution loop (based on the time not the frame)
 Return : void
 */
-void World::update(sf::Time elapsedTime)
+void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 {
+	this->currentFrameTime = currentFrameTime;
 	// Updating emitters
 	for (std::vector<BodyEmitter*>::iterator it = this->emitters.begin();
 		it != this->emitters.end();
 		++it)
 	{
-		//TODO: check for wave creations
 		(*it)->update(elapsedTime);
+		checkWaveCreation((*it));
 	}
 
 	elapsedTime.asSeconds();
@@ -73,10 +83,11 @@ void World::update(sf::Time elapsedTime)
 		++it)
 	{
 		(*it)->update(elapsedTime);
+		checkCollisionEvents((*it), elapsedTime);	// Else, check for collisions
 		if ((*it)->getRadius() > this->maxWaveDistance)	// If the wave has reached max distance : erase it
+		{
 			it = this->waves.erase(it);
-		else
-			checkCollisionEvents((*it), elapsedTime);	// Else, check for collisions
+		}
 	}
 
 	// updating receptors
@@ -94,8 +105,7 @@ For a specific receptor, look for each wave colliding with it, then set the rece
 */
 void World::setPerception(BodyReceptor* receptor)
 {
-	//TODO get the perception for the receptor
-	//TODO set the body in function of its perception
+	receptor->updateComputedValues(this->currentFrameTime);
 }
 
 std::vector<Wave*>* World::getWaves()
@@ -137,7 +147,7 @@ void World::checkCollisionEvents(Wave* wave, sf::Time elapsedTime)
 			if (!wave->hasCollided((*it)->getId()))
 			{
 				wave->onCollisionEvent((*it)->getId());
-				(*it)->onWaveCollision(wave->getEmitterId(), simulationClock->getElapsedTime(), wave->getAmplitude());
+				(*it)->onWaveCollision(wave->getEmitterId(), this->currentFrameTime, wave->getAmplitude());
 			}
 		}
 	}
@@ -145,9 +155,51 @@ void World::checkCollisionEvents(Wave* wave, sf::Time elapsedTime)
 
 bool World::distanceCheck(float x1, float y1, float x2, float y2, float minDistance, float maxDistance)
 {
-	float distanceBetweenPoints = sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+	float distanceBetweenPoints = calculateDistance(x1, y1, x2, y2);
 	if (distanceBetweenPoints > maxDistance || distanceBetweenPoints < minDistance)
 		return false;
 	return true;
+}
 
+float World::calculateDistance(float x1, float y1, float x2, float y2)
+{
+	return sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+}
+
+float World::calculateDistance(std::vector<float> pos1, std::vector<float> pos2)
+{
+	return calculateDistance(pos1.at(0), pos1.at(1), pos2.at(0), pos2.at(1));
+}
+
+// Calculates and sets the max wave distance
+void World::updateMaxWaveDistance()
+{
+	float maxDistance = 0.0f;
+	float tempDistance = 0.0f;
+
+	for (std::vector<BodyEmitter*>::iterator itEmitter = this->emitters.begin();
+		itEmitter != this->emitters.end();
+		++itEmitter)
+	{
+		for (std::vector<BodyReceptor*>::iterator itReceptor = this->receptors.begin();
+			itReceptor != this->receptors.end();
+			++itReceptor)
+		{
+			
+			tempDistance = calculateDistance((*itEmitter)->GetPosition(), (*itReceptor)->GetPosition());
+			if (tempDistance > maxDistance)
+				maxDistance = tempDistance;
+		}
+	}
+	this->maxWaveDistance = maxDistance;
+}
+
+
+void World::checkWaveCreation(BodyEmitter* emitter)
+{
+	if (emitter->checkForSend(this->currentFrameTime))
+	{
+		createWave(emitter->GetPosition(), emitter->getId(), emitter->getCurrentSpeed(), emitter->getCurrentAmplitude());
+		emitter->setLastSendTime(this->currentFrameTime);
+	}
 }

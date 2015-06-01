@@ -29,29 +29,8 @@ void GraphicView::Draw()
 {
 	window->clear(sf::Color::Black);
 
-	//Waves (not finished)
-	std::vector<Wave*>* waves = this->world->getWaves();
-    if (this->waves.size() != waves->size())
-	{
-        this->waves.clear();
-		for (int i=0; i < waves->size(); ++i)
-		{
-			this->waves.push_back(sf::CircleShape(WAVE_SIZE));
-			this->waves.at(this->waves.size()-1).setFillColor(sf::Color(0, 0, 0, 0));
-			this->waves.at(this->waves.size()-1).setOutlineColor(sf::Color(0, 0, 255));
-		}
-	}
-
-    int cpt = 0;
-	for (int idCurrentWave = 0; idCurrentWave < waves->size(); ++idCurrentWave)
-	{
-		std::vector<float> pos = waves->at(idCurrentWave)->GetPosition();
-		this->waves[idCurrentWave].setPosition(pos[0], pos[1]);
-		this->waves[idCurrentWave].setRadius(waves->at(idCurrentWave)->getRadius());
-		window->draw(this->waves[idCurrentWave]);
-		++cpt;
-	}
-
+	
+#ifndef SKIP_RECEPTORS
     //Receptors
 	std::vector<BodyReceptor*>* worldReceptors = this->world->getReceptors();
 	if (this->receptors.size() != worldReceptors->size())
@@ -61,6 +40,7 @@ void GraphicView::Draw()
 		{
 			this->receptors.push_back(sf::CircleShape(RECEPTOR_SIZE));
 			this->receptors.at(this->receptors.size()-1).setFillColor(sf::Color(255, 0, 0));
+			this->receptors.at(this->receptors.size() - 1).setOrigin(RECEPTOR_SIZE / 2, RECEPTOR_SIZE / 2);
 		}
 	}
 
@@ -71,6 +51,11 @@ void GraphicView::Draw()
 		window->draw(this->receptors[idCurrentBody]);
 	}
 
+	/*std::cout << "Receptor size : " << this->receptors.size() << std::endl;
+	std::cout << "World Receptor size : " << worldReceptors->size() << std::endl;*/
+#endif
+
+#ifndef SKIP_EMITTERS
     //Emitters
 	std::vector<BodyEmitter*>* worldEmitters = this->world->getEmitters();
 	if (this->emitters.size() != worldEmitters->size())
@@ -80,6 +65,7 @@ void GraphicView::Draw()
 		{
 			this->emitters.push_back(sf::CircleShape(EMITTER_SIZE));
 			this->emitters.at(this->emitters.size()-1).setFillColor(sf::Color(0, 255, 0));
+			this->emitters.at(this->emitters.size() - 1).setOrigin(EMITTER_SIZE / 2, EMITTER_SIZE / 2);
 		}
 	}
 
@@ -89,6 +75,57 @@ void GraphicView::Draw()
 		this->emitters[idCurrentBody].setPosition(pos[0], pos[1]);
 		window->draw(this->emitters[idCurrentBody]);
 	}
+
+	/*std::cout << "Emitter size : " << this->emitters.size() << std::endl;
+	std::cout << "World Emitter size : " << worldEmitters->size() << std::endl;*/
+#endif
+
+#ifndef SKIP_WAVES
+	//Waves
+	std::vector<Wave*>* worldWaves = this->world->getWaves();
+	if (this->waves.size() != worldWaves->size())
+	{
+		this->waves.clear();
+		for (int i = 0; i < worldWaves->size(); ++i)
+		{
+			//this->waves.push_back(sf::CircleShape(WAVE_SIZE));
+			
+			sf::CircleShape newWave(0.0f);
+			// Setting color
+			newWave.setFillColor(sf::Color(255, 255, 255,0));
+			newWave.setOutlineColor(sf::Color(0, 0, 255,255));
+			newWave.setOutlineThickness(1);
+
+			// Setting origin
+			float x;
+			float y;
+			worldWaves->at(i)->GetPosition(x, y);
+			newWave.setPosition(x, y);
+//			std::cout << "New wave origin : " << x << "," << y << endl;
+			
+			
+			/*this->waves.at(this->waves.size() - 1).setFillColor(sf::Color(255, 255, 255, 1));
+			this->waves.at(this->waves.size() - 1).setOutlineColor(sf::Color(0, 0, 255));*/
+
+			this->waves.push_back(newWave);
+		}
+	}
+
+	int cpt = 0;
+	for (int idCurrentWave = 0; idCurrentWave < worldWaves->size(); ++idCurrentWave)
+	{
+		this->waves[idCurrentWave].setOrigin(worldWaves->at(idCurrentWave)->getRadius(), worldWaves->at(idCurrentWave)->getRadius());
+		this->waves[idCurrentWave].setRadius(worldWaves->at(idCurrentWave)->getRadius());
+		window->draw(this->waves[idCurrentWave]);
+
+		/*std::cout << "Drawing a wave at " << this->waves[idCurrentWave].getPosition().x << "," << this->waves[idCurrentWave].getPosition().y <<
+			", radius : " << this->waves[idCurrentWave].getRadius() << std::endl;*/
+		++cpt;
+	}
+
+	/*std::cout << "Wave size : " << this->waves.size() << std::endl;
+	std::cout << "World Wave size : " << worldWaves->size() << std::endl;*/
+#endif
 
 	window->display();
 }

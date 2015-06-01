@@ -12,5 +12,4 @@ void BodyEmitter::initialise()
 
 void BodyEmitter::update(sf::Time elapsedTime)
 {
-
 }

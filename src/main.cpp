@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 	Simulator simulator;
 
 	//simulator.CreateWorld();
-	simulator.run(sf::seconds(1/60));
+	simulator.run(sf::milliseconds(17));
 
 	return EXIT_SUCCESS;
 }

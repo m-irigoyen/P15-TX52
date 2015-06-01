@@ -35,6 +35,7 @@ private:
 
 public:
 	Simulator();
+	void init();	
 
     // Creates a body for the given agent at given position, then adds this agent to the list,
     void addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos);

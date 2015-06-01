@@ -29,6 +29,16 @@ void PhysicalObject::GetPosition(float &x, float &y)
 	y = this->posY;
 }
 
+float PhysicalObject::getX()
+{
+	return this->posX;
+}
+
+float PhysicalObject::getY()
+{
+	return this->posY;
+}
+
 std::vector<float> PhysicalObject::GetPosition()
 {
 	std::vector<float> ret;

@@ -23,7 +23,7 @@ void Emitter::send(float frequency, float amplitude, float speed)
 
 /**
 *	Call that function inside the update function of a body.
-*	This will check if the emitter is sending, and if it is, if a new peak needs to be sent. (And if that is the case, it'll send it for you)
+*	This will check if the emitter is sending, and if it is, if a new peak needs to be sent.
 */
 bool Emitter::checkForSend(sf::Time currentTime)
 {

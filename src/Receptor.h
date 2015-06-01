@@ -15,7 +15,7 @@ protected:
 	Perception perception;
 	std::map<sf::Time, float> computedValues;
 
-	virtual float calculateValueAtT(sf::Time t) = 0;    // Calculates value for given wave at given time
+	
 
 public:
 	Receptor();
@@ -25,6 +25,7 @@ public:
 	virtual void onWaveCollision(int emitterId, sf::Time contact, float amplitude);
 
 	virtual float calculateValueAtT(sf::Time t) = 0;    // Calculates value for result wave at given time
+	virtual float calculateValueAtT(sf::Time t, sf::Time firstContact, float frequency, float amplitude) = 0;    // Calculates value for given wave at given time
 
 	/*!
 	Precision = how many points to compute

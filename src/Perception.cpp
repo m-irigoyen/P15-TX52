@@ -42,7 +42,7 @@ void Perception::getEncasingIterators(sf::Time t, bool& exactMatch,
         std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator& itBefore,
         std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator& itAfter)
 {
-    std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = this->percievedWaves.find(t);
+    std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = findByTime(t);
 
 
     if (it != this->percievedWaves.end())   // Case 1 : found an exact match
@@ -52,7 +52,7 @@ void Perception::getEncasingIterators(sf::Time t, bool& exactMatch,
         itAfter = it;
         return;
     }
-    else if (t < (*this->percievedWaves.begin())->first) // Case 2 : t older than oldest element
+    else if (t < (*this->percievedWaves.begin()).second.first) // Case 2 : t older than oldest element
     {
         exactMatch = false;
         itBefore = this->percievedWaves.begin();
@@ -60,7 +60,7 @@ void Perception::getEncasingIterators(sf::Time t, bool& exactMatch,
         return;
     }
     else if (this->percievedWaves.size() >= 1 &&
-            t > (*this->percievedWaves.at(this->percievedWaves.size()-1))->first
+		t > (this->percievedWaves.at(this->percievedWaves.size() - 1)).first
             )   // Case 3 : t newer than newest perception element
     {
         exactMatch = false;
@@ -75,11 +75,11 @@ void Perception::getEncasingIterators(sf::Time t, bool& exactMatch,
     int i = 0;
     for (it = this->percievedWaves.begin(); it != this->percievedWaves.end(); ++it)
     {
-        if (t < (*it)->first)   // We passed t
+		if (t < (*it).second.first)   // We passed t
         {
             exactMatch = false;
             itAfter = it;
-            itBefore = this->percievedWaves.at(i-1);
+            itBefore = --it;
             return;
         }
 
@@ -90,4 +90,18 @@ void Perception::getEncasingIterators(sf::Time t, bool& exactMatch,
 std::map<int, std::pair<sf::Time, std::pair<float, float>>>* Perception::getWaves()
 {
 	return &this->percievedWaves;
+}
+
+// Private methods
+std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator Perception::findByTime(sf::Time t)
+{
+	for (
+		std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = this->percievedWaves.begin();
+		it != this->percievedWaves.end();
+		++it
+		)
+	{
+		if (it->second.first == t)
+			return it;
+	}
 }
