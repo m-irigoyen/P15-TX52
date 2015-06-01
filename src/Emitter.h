@@ -6,7 +6,7 @@
 *	Emitters can send waves in the world.
 */
 
-#include <SFML\System\Clock.hpp>
+#include <SFML/System/Clock.hpp>
 
 
 //FIXME : Problem of refresh rate to send waves. Maybe add a timeToSend in send, so the world can already place the wave at the correct position accounting for the time that has passed
@@ -37,13 +37,13 @@ public:
 
 	// Setters
 	void setLastSendTime(sf::Time newLastSendTime);	// When newest peak has ben sent, the world will call this to notify the Emitter
-	
+
 	// Getters
 	virtual sf::Time getLastSendTime();
 	virtual float getCurrentAmplitude();
 	virtual float getCurrentFrequency();
 	virtual float getCurrentSpeed();
-	
+
 	// Static functions
 	static sf::Time getTimeFromFrequency(float frequency);
 };

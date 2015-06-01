@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Semantic.h"
-#include "SFML\System\Time.hpp"
+#include <SFML/System/Time.hpp>
 
 /*
 *   The PhysicalObject is the main class for all the object in the simulation.

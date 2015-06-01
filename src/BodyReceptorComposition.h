@@ -21,12 +21,14 @@ public:
 	virtual float calculateValueAtT(sf::Time t);
 	virtual std::vector<float> computePercievedWave(sf::Time start, sf::Time duration, int precision);	//! Precision = how many points to compute
 
-	virtual void updateComputedValues();
+	virtual void updateComputedValues(sf::Time currentTime);
 
 	//Body functions
 	virtual void update(sf::Time elapsedTime);
 
 protected:
+    virtual float calculateValueAtT(sf::Time t);    // Calculates value for given wave at given time
+
 	WAVE_COMPOSITION currentPerception;
 	std::vector<float> values;
 };

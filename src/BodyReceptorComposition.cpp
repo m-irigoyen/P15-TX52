@@ -34,6 +34,7 @@ WAVE_COMPOSITION BodyReceptorComposition::getPerception()
 
 float BodyReceptorComposition::calculateValueAtT(sf::Time t)
 {
+    //TODO: finish that
 	return -1.0f;
 }
 
@@ -44,13 +45,19 @@ std::vector<float> BodyReceptorComposition::computePercievedWave(sf::Time start,
 	return test;
 }
 
-void BodyReceptorComposition::updateComputedValues()
+void BodyReceptorComposition::updateComputedValues(sf::Time currentTime)
 {
-
+    this->computedValues.insert(std::pair<sf::Time, float>(currentTime, calculateValueAtT(currentTime)));
 }
 
 //Body functions
 void BodyReceptorComposition::update(sf::Time elapsedTime)
+{
+
+}
+
+// Calculates value for given wave at given time
+float BodyReceptorComposition::calculateValueAtT(sf::Time t)
 {
 
 }

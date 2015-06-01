@@ -15,6 +15,8 @@ protected:
 	Perception perception;
 	std::map<sf::Time, float> computedValues;
 
+	virtual float calculateValueAtT(sf::Time t) = 0;    // Calculates value for given wave at given time
+
 public:
 	Receptor();
 
@@ -22,7 +24,7 @@ public:
 	virtual WAVE_COMPOSITION getPerception() = 0;    // Returns what the receptor can make of all it has recieved. #PHYSICS STUFF
 	virtual void onWaveCollision(int emitterId, sf::Time contact, float amplitude);
 
-	virtual float calculateValueAtT(sf::Time t) = 0;
+	virtual float calculateValueAtT(sf::Time t) = 0;    // Calculates value for result wave at given time
 
 	/*!
 	Precision = how many points to compute
@@ -30,7 +32,7 @@ public:
 	virtual std::vector<float> computePercievedWave(sf::Time start, sf::Time duration, int precision) = 0;
 
 	virtual std::map<sf::Time, float>* getComputedValues();
-	virtual void updateComputedValues() = 0;
+	virtual void updateComputedValues(sf::Time currentTime) = 0;
 
 };
 

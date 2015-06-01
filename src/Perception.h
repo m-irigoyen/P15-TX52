@@ -9,7 +9,7 @@
 #include <iostream>
 #include <map>
 #include<vector>
-#include "SFML\System\Time.hpp"
+#include <SFML/System/Time.hpp>
 
 struct WAVE_COMPOSITION
 {
@@ -20,10 +20,10 @@ struct WAVE_COMPOSITION
 class Perception
 {
 private:
-	
+
 	/*!
 		This map stores each percieved wave.
-		When a wave is percieved and has an unknown emitter id, just add it 
+		When a wave is percieved and has an unknown emitter id, just add it
 		emitterId = firstContact, frequency, amplitude
 	*/
 	std::map<int, std::pair<sf::Time, std::pair<float, float>>> percievedWaves;
@@ -35,6 +35,10 @@ public:
 
 	void addNewWave(int emitterId, sf::Time firstContact, float amplitude);	// Adds that new wave to the list
 	void removeWave(int emitterId);	// Removes given id from the list
+
+	void getEncasingIterators(sf::Time t, bool& exactMatch,
+        std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator& itBefore,
+        std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator& itAfter);  // Return an iterator to before and after that time
 
 	std::map<int, std::pair<sf::Time, std::pair<float, float>>>* getWaves();
 };

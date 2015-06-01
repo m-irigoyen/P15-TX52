@@ -11,9 +11,8 @@
 
 class BodyReceptor:  public Body, public Receptor
 {
-protected: 
-
-
+protected:
+    virtual float calculateValueAtT(sf::Time t) = 0;    // Calculates value for given wave at given time
 public:
 	BodyReceptor(Semantic type, float x, float y);
 
@@ -23,7 +22,7 @@ public:
 	virtual float calculateValueAtT(sf::Time t) = 0;
 	virtual std::vector<float> computePercievedWave(sf::Time start, sf::Time duration, int precision) = 0;	//! Precision = how many points to compute
 
-	virtual void updateComputedValues() = 0;
+	virtual void updateComputedValues(sf::Time currentTime) = 0;
 
 	//Body functions
     virtual void update(sf::Time elapsedTime) = 0;
