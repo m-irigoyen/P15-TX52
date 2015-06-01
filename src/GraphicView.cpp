@@ -40,7 +40,7 @@ void GraphicView::Draw()
 		{
 			this->receptors.push_back(sf::CircleShape(RECEPTOR_SIZE));
 			this->receptors.at(this->receptors.size()-1).setFillColor(sf::Color(255, 0, 0));
-			this->receptors.at(this->receptors.size() - 1).setOrigin(RECEPTOR_SIZE / 2, RECEPTOR_SIZE / 2);
+			this->receptors.at(this->receptors.size() - 1).setOrigin(RECEPTOR_SIZE , RECEPTOR_SIZE );
 		}
 	}
 
@@ -65,7 +65,7 @@ void GraphicView::Draw()
 		{
 			this->emitters.push_back(sf::CircleShape(EMITTER_SIZE));
 			this->emitters.at(this->emitters.size()-1).setFillColor(sf::Color(0, 255, 0));
-			this->emitters.at(this->emitters.size() - 1).setOrigin(EMITTER_SIZE / 2, EMITTER_SIZE / 2);
+			this->emitters.at(this->emitters.size() - 1).setOrigin(EMITTER_SIZE , EMITTER_SIZE );
 		}
 	}
 
