@@ -20,7 +20,7 @@ class Pendulum{
         double getAngle();
         double getSpeed();
         ~Pendulum();
-}
+};
 
 
 #endif

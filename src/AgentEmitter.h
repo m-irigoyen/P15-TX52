@@ -13,7 +13,7 @@ protected:
     int state;
 
 public:
-	AgentEmitter(Problem* problem, Body* body = NULL, state = 0);
+	AgentEmitter(Problem* problem, Body* body = NULL);
 
 	virtual void live();
 

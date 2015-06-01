@@ -1,7 +1,6 @@
-#include <stdlib>
-#include <stdout>
 #include <cmath>
-#include "SinVariation.h"
+//#include "SinVariation.h"
+#include "Pendulum.h"
 
 using namespace std;
 
