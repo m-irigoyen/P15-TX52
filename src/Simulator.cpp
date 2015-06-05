@@ -1,20 +1,25 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : finishSimulation(false), frameFlag(true), world(&simulationClock)
+Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL)
 {
 	this->SFMLView.Init(800, 800);
 
 	this->SFMLView.SetWorld(&this->world);
 	this->window = this->SFMLView.getWindow();
-	
+
 	init();
 }
 
 void Simulator::init()
 {
 	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 200, 200);
+	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 300, 200);
+	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 400, 200);
+
 	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 200);
+	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 300);
+	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 400);
 }
 
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
@@ -39,7 +44,7 @@ void Simulator::run(sf::Time refreshRate)
 		if (this->frameFlag)
 		{
 			this->frameFlag = false;
-			startTime = simulationClock.getElapsedTime(); 
+			startTime = simulationClock.getElapsedTime();
 			//std::cout << endl << "Simulator::Run : STARTING FRAME" << endl;
 
 			// UPDATE STUFF
@@ -68,6 +73,8 @@ void Simulator::run(sf::Time refreshRate)
 		{
 			checkEvents();	// Checking for user input
 
+			//std::cout << "C'est là?" << std::endl;
+
 			endTime = simulationClock.getElapsedTime();
 			sf::Time frameTime = endTime - startTime;
 
@@ -88,22 +95,38 @@ void Simulator::checkEvents()
 	sf::Event event;
 	while (this->window->pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed)
-		{
-			this->window->close();
-			finishSimulation = true;
-		}
+        switch (event.type)
+        {
+                case sf::Event::Closed :
+                    this->window->close();
+                    finishSimulation = true;
+                    break;
+                case sf::Event::KeyPressed :
+                    if (event.key.code == sf::Keyboard::O)
+                    {
+                        if (this->world.toggleWaveOptimisation())
+                            std::cout << "Wave optimisation : on" << std::endl;
+                        else
+                            std::cout << "Wave optimisation : off" << std::endl;
+                    }
+                    break;
+                case sf::Event::MouseButtonPressed :
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+                        //std::cout << "Searching body in " <<
+                        selectedBody = this->world.getClosestBodyFromLocation(
+                            event.mouseButton.x,event.mouseButton.y,2*EMITTER_RADIUSSIZE);
+                    }
+
+                    break;
+                case sf::Event::MouseMoved :
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && selectedBody != NULL)
+                    {
+                        selectedBody->SetPosition(event.mouseMove.x, event.mouseMove.y);
+                        //std::cout << "MOVING BODY TO " << event.mouseMove.x << "," << event.mouseMove.y <<  std::endl;
+                    }
+                    this->world.updateMaxWaveDistance();    // Recalculating max wave distance
+                    break;
+        }
 	}
-
-	// Checking user input
-	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		// Left click : painting the map
-		sf::Vector2i pixelPos = sf::Mouse::getPosition(*this->window);
-		sf::Vector2f worldPos = this->window->mapPixelToCoords(pixelPos);
-		int x, y;
-		this->SFMLView.convertCoordinates_worldToTiles(static_cast<int>(worldPos.x), static_cast<int>(worldPos.y), x, y);
-
-		applyUserAction(this->SFMLView.getUserAction(), x, y);
-	}*/
 }

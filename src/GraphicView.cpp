@@ -13,23 +13,14 @@ void GraphicView::Init(int height, int width)
 
 int GraphicView::CheckEvent()
 {
-	sf::Event event;
-    while (this->window->pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-		{
-            this->window->close();
-			return 1;
-		}
-    }
-	return 0;
+
 }
 
 void GraphicView::Draw()
 {
 	window->clear(sf::Color::Black);
 
-	
+
 #ifndef SKIP_RECEPTORS
     //Receptors
 	std::vector<BodyReceptor*>* worldReceptors = this->world->getReceptors();
@@ -38,9 +29,9 @@ void GraphicView::Draw()
 		this->receptors.clear();
 		for (int i=0; i < worldReceptors->size(); ++i)
 		{
-			this->receptors.push_back(sf::CircleShape(RECEPTOR_SIZE));
+			this->receptors.push_back(sf::CircleShape(RECEPTOR_RADIUSSIZE));
 			this->receptors.at(this->receptors.size()-1).setFillColor(sf::Color(255, 0, 0));
-			this->receptors.at(this->receptors.size() - 1).setOrigin(RECEPTOR_SIZE , RECEPTOR_SIZE );
+			this->receptors.at(this->receptors.size() - 1).setOrigin(RECEPTOR_RADIUSSIZE , RECEPTOR_RADIUSSIZE );
 		}
 	}
 
@@ -63,9 +54,9 @@ void GraphicView::Draw()
 		this->emitters.clear();
 		for (int i=0; i < worldEmitters->size(); ++i)
 		{
-			this->emitters.push_back(sf::CircleShape(EMITTER_SIZE));
+			this->emitters.push_back(sf::CircleShape(EMITTER_RADIUSSIZE));
 			this->emitters.at(this->emitters.size()-1).setFillColor(sf::Color(0, 255, 0));
-			this->emitters.at(this->emitters.size() - 1).setOrigin(EMITTER_SIZE , EMITTER_SIZE );
+			this->emitters.at(this->emitters.size() - 1).setOrigin(EMITTER_RADIUSSIZE , EMITTER_RADIUSSIZE );
 		}
 	}
 
@@ -89,7 +80,7 @@ void GraphicView::Draw()
 		for (int i = 0; i < worldWaves->size(); ++i)
 		{
 			//this->waves.push_back(sf::CircleShape(WAVE_SIZE));
-			
+
 			sf::CircleShape newWave(0.0f);
 			// Setting color
 			newWave.setFillColor(sf::Color(255, 255, 255,0));
@@ -102,8 +93,8 @@ void GraphicView::Draw()
 			worldWaves->at(i)->GetPosition(x, y);
 			newWave.setPosition(x, y);
 //			std::cout << "New wave origin : " << x << "," << y << endl;
-			
-			
+
+
 			/*this->waves.at(this->waves.size() - 1).setFillColor(sf::Color(255, 255, 255, 1));
 			this->waves.at(this->waves.size() - 1).setOutlineColor(sf::Color(0, 0, 255));*/
 

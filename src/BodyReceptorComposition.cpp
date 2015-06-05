@@ -48,20 +48,26 @@ float BodyReceptorComposition::calculateValueAtT(sf::Time t)
 // Calculates value for given wave at given time
 float BodyReceptorComposition::calculateValueAtT(sf::Time t, sf::Time firstContact, float frequency, float amplitude)
 {
-	//TODO: Do the math
-	return 0.0f;
-}
-
-	//! Precision = how many points to compute
-std::vector<float> BodyReceptorComposition::computePercievedWave(sf::Time start, sf::Time duration, int precision)
-{
-	std::vector<float> test;
-	return test;
+    sf::Time elapsedTime = t - firstContact;
+    float period = 2*M_PI*frequency;
+    while (elapsedTime.asSeconds() > period)
+    {
+        elapsedTime = sf::seconds(elapsedTime.asSeconds() - period);
+    }
+	return amplitude*sin(elapsedTime.asSeconds()/frequency);
 }
 
 void BodyReceptorComposition::updateComputedValues(sf::Time currentTime)
 {
-    this->computedValues.insert(std::pair<sf::Time, float>(currentTime, calculateValueAtT(currentTime)));
+    this->computedValues.push_front(std::pair<sf::Time, float>(currentTime, calculateValueAtT(currentTime)));
+    sf::Time differenceTime = currentTime - this->computedValues.back().first;
+    //std::cout << "differenceTime " << differenceTime.asSeconds() << std::endl;
+    //std::cout << "memoryTime " << differenceTime.asSeconds() << std::endl;
+    while(!this->computedValues.empty() && (currentTime - this->computedValues.back().first) > this->memoryTime)
+    {
+        std::cout << "OUAIS SALUT OUAIS " << std::endl;
+        this->computedValues.pop_back();
+    }
 }
 
 //Body functions

@@ -1,8 +1,47 @@
 #include "World.h"
 
-World::World(sf::Clock* clock) : simulationClock(clock), maxWaveDistance(0.0f)
+World::World(sf::Clock* clock, float worldLength, float worldHeight) : simulationClock(clock), maxWaveDistance(0.0f), optimiseWaveTravelDistance(true)
 {
     this->receptors.clear();
+    this->maxWorldDistance = calculateDistance(0,0, worldLength, worldHeight);
+}
+
+bool World::toggleWaveOptimisation()
+{
+    if (this->optimiseWaveTravelDistance)
+        this->optimiseWaveTravelDistance = false;
+    else
+        this->optimiseWaveTravelDistance = true;
+
+    return this->optimiseWaveTravelDistance;
+}
+
+Body* World::getClosestBodyFromLocation(float x, float y, float rangeThreshold)
+{
+    Body* ret = NULL;
+    float distance = rangeThreshold;
+    float tempDistance;
+    for (std::vector<BodyEmitter*>::iterator it = this->emitters.begin(); it != this->emitters.end(); ++it)
+    {
+        tempDistance = calculateDistance(x,y,(*it)->GetPosition());
+        if (tempDistance < distance)
+        {
+            distance = tempDistance;
+            ret = (*it);
+        }
+    }
+
+    for (std::vector<BodyReceptor*>::iterator it = this->receptors.begin(); it != this->receptors.end(); ++it)
+    {
+        tempDistance = calculateDistance(x,y,(*it)->GetPosition());
+        if (tempDistance < distance)
+        {
+            distance = tempDistance;
+            ret = (*it);
+        }
+    }
+
+    return ret;
 }
 
 Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
@@ -84,9 +123,14 @@ void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 	{
 		(*it)->update(elapsedTime);
 		checkCollisionEvents((*it), elapsedTime);	// Else, check for collisions
-		if ((*it)->getRadius() > this->maxWaveDistance)	// If the wave has reached max distance : erase it
+		if (optimiseWaveTravelDistance && (*it)->getRadius() > this->maxWaveDistance)	// If the wave has reached max distance : erase it
 		{
+            //std::cout << "OUAIS SALUT OUAIS " << std::endl;
 			it = this->waves.erase(it);
+		}
+		else if ((*it)->getRadius() > this->maxWorldDistance)
+		{
+            it = this->waves.erase(it);
 		}
 	}
 
@@ -105,7 +149,7 @@ For a specific receptor, look for each wave colliding with it, then set the rece
 */
 void World::setPerception(BodyReceptor* receptor)
 {
-	receptor->updateComputedValues(this->currentFrameTime);
+	//receptor->updateComputedValues(this->currentFrameTime);
 }
 
 std::vector<Wave*>* World::getWaves()
@@ -171,6 +215,11 @@ float World::calculateDistance(std::vector<float> pos1, std::vector<float> pos2)
 	return calculateDistance(pos1.at(0), pos1.at(1), pos2.at(0), pos2.at(1));
 }
 
+float World::calculateDistance(float x1, float y1, std::vector<float> pos2)
+{
+    return calculateDistance(x1,y1, pos2.at(0), pos2.at(1));
+}
+
 // Calculates and sets the max wave distance
 void World::updateMaxWaveDistance()
 {
@@ -185,10 +234,16 @@ void World::updateMaxWaveDistance()
 			itReceptor != this->receptors.end();
 			++itReceptor)
 		{
-			
+
 			tempDistance = calculateDistance((*itEmitter)->GetPosition(), (*itReceptor)->GetPosition());
 			if (tempDistance > maxDistance)
 				maxDistance = tempDistance;
+
+            if (maxDistance > this->maxWorldDistance)
+            {
+                this->maxWaveDistance = this->maxWorldDistance;
+                return;
+            }
 		}
 	}
 	this->maxWaveDistance = maxDistance;

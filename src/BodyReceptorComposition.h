@@ -1,6 +1,7 @@
 #ifndef BODYRECEPTORCOMPOSITION_H_
 #define BODYRECEPTORCOMPOSITION_H_
 
+#include <math.h>
 #include "BodyReceptor.h"
 
 /*
@@ -20,8 +21,8 @@ public:
 	virtual WAVE_COMPOSITION getPerception();    // Returns what the receptor can make of all it has recieved. #PHYSICS STUFF
 	virtual float calculateValueAtT(sf::Time t);
 	virtual float calculateValueAtT(sf::Time t, sf::Time firstContact, float frequency, float amplitude);    // Calculates value for given wave at given time
-	virtual std::vector<float> computePercievedWave(sf::Time start, sf::Time duration, int precision);	//! Precision = how many points to compute
 
+    //TODO: coder ça avec la formule des complexes, exprimer l'amplitude en fonction de x,t (page wikipedia interférence)
 	virtual void updateComputedValues(sf::Time currentTime);
 
 	//Body functions
@@ -30,7 +31,6 @@ public:
 protected:
 
 	WAVE_COMPOSITION currentPerception;
-	std::vector<float> values;
 };
 
 #endif
