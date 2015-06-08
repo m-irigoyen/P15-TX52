@@ -6,6 +6,7 @@
 *	Emitters can send waves in the world.
 */
 
+#include <iostream>
 #include <SFML/System/Clock.hpp>
 
 

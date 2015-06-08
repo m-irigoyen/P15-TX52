@@ -36,7 +36,10 @@ bool Emitter::checkForSend(sf::Time currentTime)
 		// Else check if new send is needed
 		sf::Time check = currentTime - this->lastSendTime;
 		if (check >= getTimeFromFrequency(this->currentFrequency))
+		{
 			return true;
+		}
+			
 	}
 	return false;
 }
@@ -88,5 +91,6 @@ float Emitter::getCurrentSpeed()
 // Static functions
 sf::Time Emitter::getTimeFromFrequency(float frequency)
 {
-	return sf::seconds(frequency);
+	sf::Time t = sf::seconds(1);
+	return t / frequency;
 }

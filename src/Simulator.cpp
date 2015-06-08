@@ -18,8 +18,8 @@ void Simulator::init()
 	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 400, 200);
 
 	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 200);
-	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 300);
-	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 400);
+	//addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 300);
+	//addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 400);
 }
 
 void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)

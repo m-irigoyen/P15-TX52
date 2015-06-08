@@ -7,5 +7,5 @@ AgentEmitter::AgentEmitter(Problem* problem, Body* body) : Agent(problem, body)
 
 void AgentEmitter::live()
 {
-	((BodyEmitter*)this->body)->send(1.0f,1.0f);
+	((BodyEmitter*)this->body)->send(10.0f,1.0f);
 }

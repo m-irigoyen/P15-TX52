@@ -49,11 +49,11 @@ float BodyReceptorComposition::calculateValueAtT(sf::Time t)
 float BodyReceptorComposition::calculateValueAtT(sf::Time t, sf::Time firstContact, float frequency, float amplitude)
 {
     sf::Time elapsedTime = t - firstContact;
-    float period = 2*M_PI*frequency;
-    while (elapsedTime.asSeconds() > period)
+    float period = 2* PI*frequency;
+    /*while (elapsedTime.asSeconds() > period)
     {
         elapsedTime = sf::seconds(elapsedTime.asSeconds() - period);
-    }
+    }*/
 	return amplitude*sin(elapsedTime.asSeconds()/frequency);
 }
 

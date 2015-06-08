@@ -11,11 +11,6 @@ void GraphicView::Init(int height, int width)
 	this->window->setVerticalSyncEnabled(true);
 }
 
-int GraphicView::CheckEvent()
-{
-
-}
-
 void GraphicView::Draw()
 {
 	window->clear(sf::Color::Black);

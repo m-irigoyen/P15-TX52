@@ -140,7 +140,7 @@ void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 		++it)
 	{
 		(*it)->update(elapsedTime);
-		setPerception((*it));
+		//setPerception((*it));
 	}
 }
 

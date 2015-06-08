@@ -1,8 +1,9 @@
 #ifndef BODYRECEPTORCOMPOSITION_H_
 #define BODYRECEPTORCOMPOSITION_H_
 
-#include <math.h>
 #include "BodyReceptor.h"
+
+#define PI (3.141592653589793)
 
 /*
 * Receptor bodies can percieve waves in the world.
