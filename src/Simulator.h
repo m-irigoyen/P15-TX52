@@ -5,9 +5,13 @@
 #include <chrono>
 #include <iostream>
 
-#include "AgentEmitter.h"
-#include "AgentReceptor.h"
 #include "GraphicView.h"
+
+// Pointer problem
+#include "ProblemPointer.h"
+#include "AgentEmitterProblemPointer.h"
+#include "AgentReceptorProblemPointer.h"
+
 
 /*
 *   The Simulator is the main class of the project.
@@ -42,7 +46,8 @@ public:
 	void init();
 
     // Creates a body for the given agent at given position, then adds this agent to the list,
-    void addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos);
+	void addEmitter(float xPos, float yPos);
+	void addReceptor(float xPos, float yPos);
 
 	void checkEvents();	// Check simulation events
 	void run(sf::Time refreshRate);

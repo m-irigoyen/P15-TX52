@@ -44,6 +44,7 @@ Body* World::getClosestBodyFromLocation(float x, float y, float rangeThreshold)
     return ret;
 }
 
+// Creates a body with the given type
 Body* World::createBody(BODY_TYPE bodyType, float xPos, float yPos)
 {
     Body* body;
@@ -105,6 +106,8 @@ Return : void
 void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 {
 	this->currentFrameTime = currentFrameTime;
+
+
 	// Updating emitters
 	for (std::vector<BodyEmitter*>::iterator it = this->emitters.begin();
 		it != this->emitters.end();
@@ -117,21 +120,21 @@ void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 	elapsedTime.asSeconds();
 
 	//Updating waves
-	for (std::vector<Wave*>::iterator it = this->waves.begin();
-		it != this->waves.end();
-		++it)
+	std::vector<Wave*>::iterator it = this->waves.begin();
+	while (it != this->waves.end())
 	{
 		(*it)->update(elapsedTime);
 		checkCollisionEvents((*it), elapsedTime);	// Else, check for collisions
 		if (optimiseWaveTravelDistance && (*it)->getRadius() > this->maxWaveDistance)	// If the wave has reached max distance : erase it
 		{
-            //std::cout << "OUAIS SALUT OUAIS " << std::endl;
 			it = this->waves.erase(it);
 		}
 		else if ((*it)->getRadius() > this->maxWorldDistance)
 		{
-            it = this->waves.erase(it);
+			it = this->waves.erase(it);
 		}
+		else
+			++it;
 	}
 
 	// updating receptors
@@ -140,8 +143,9 @@ void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 		++it)
 	{
 		(*it)->update(elapsedTime);
-		//setPerception((*it));
+		setPerception((*it));
 	}
+
 }
 
 /*
@@ -149,7 +153,7 @@ For a specific receptor, look for each wave colliding with it, then set the rece
 */
 void World::setPerception(BodyReceptor* receptor)
 {
-	//receptor->updateComputedValues(this->currentFrameTime);
+	receptor->updateComputedValues(this->currentFrameTime);
 }
 
 std::vector<Wave*>* World::getWaves()
@@ -169,6 +173,23 @@ std::vector<BodyReceptor*>* World::getReceptors()
 
 World::~World(void)
 {
+	for (std::vector<Wave*>::iterator it = this->waves.begin(); it != this->waves.end(); ++it)
+	{
+		delete (*it);
+		*it = NULL;
+	}
+	for (std::vector<BodyReceptor*>::iterator it = this->receptors.begin(); it != this->receptors.end(); ++it)
+	{
+		delete (*it);
+		*it = NULL;
+	}
+
+	for (std::vector<BodyEmitter*>::iterator it = this->emitters.begin(); it != this->emitters.end(); ++it)
+	{
+		delete (*it);
+		*it = NULL;
+	}
+
 }
 
 //Private

@@ -2,6 +2,7 @@
 #define AGENTRECEPTOR_H_
 
 #include "Agent.h"
+#include "BodyReceptorComposition.h"
 
 /*
 *   AgentReceptors recieve waves in the environment, and in turn act on the problem (drone, pendulum, etc)
@@ -11,10 +12,15 @@ class AgentReceptor : public Agent
 {
 protected:
 
+	BodyReceptor* castedBody;
+
 public:
-	AgentReceptor(Problem* problem, Body* body = NULL);
+	AgentReceptor(Problem* problem, BodyReceptorComposition* body = NULL);
 
 	virtual void live();
+
+	virtual void connectCasted(BodyReceptorComposition* body);
+	virtual void disconnect();
 
 	~AgentReceptor(void);
 };

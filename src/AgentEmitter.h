@@ -10,12 +10,17 @@
 class AgentEmitter : public Agent
 {
 protected:
-    int state;
+	//int state;
+
+	BodyEmitter* castedBody;
 
 public:
-	AgentEmitter(Problem* problem, Body* body = NULL);
+	AgentEmitter(Problem* problem, BodyEmitter* body = NULL);
 
 	virtual void live();
+
+	virtual void connectCasted(BodyEmitter* body);
+	virtual void disconnect();
 
 	~AgentEmitter(void);
 };

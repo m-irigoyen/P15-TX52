@@ -3,7 +3,9 @@
 
 Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL)
 {
-	this->SFMLView.Init(800, 800);
+	this->problem = new ProblemPointer(400, 400);
+
+	this->SFMLView.Init(400, 400);
 
 	this->SFMLView.SetWorld(&this->world);
 	this->window = this->SFMLView.getWindow();
@@ -13,20 +15,50 @@ Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(fal
 
 void Simulator::init()
 {
-	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 200, 200);
-	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 300, 200);
-	addAgent(new AgentReceptor(this->problem), BODY_TYPE::RECEPTOR, 400, 200);
-
-	addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 200);
-	//addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 300);
-	//addAgent(new AgentEmitter(this->problem), BODY_TYPE::EMITTER, 500, 400);
+	std::cout << "Initialising" << std::endl;
+	this->problem = new ProblemPointer(500, 500);
+	
+	addEmitter(200,200);
+	addReceptor(400, 200);
+	std::cout << "Init done" << std::endl;
 }
 
-void Simulator::addAgent(Agent* agent, BODY_TYPE bodyType, float xPos, float yPos)
+void Simulator::addEmitter(float xPos, float yPos)
 {
-	Body* body = this->world.createBody(bodyType, xPos, yPos);
-	agent->connect(body);
-	this->agents.push_back(agent);
+	BodyEmitter* body = static_cast<BodyEmitter*>(this->world.createBody(BODY_TYPE::EMITTER, xPos, yPos));
+	if (body != NULL)
+	{
+		ProblemPointer* castedProblem = static_cast<ProblemPointer*>(this->problem);
+		if (castedProblem != NULL)
+		{
+			AgentEmitterProblemPointer* agent = new AgentEmitterProblemPointer(castedProblem);
+			agent->connectCasted(body);
+			this->agents.push_back(agent);
+		}
+		else
+			std::cout << "ERROR : couldn't cast problem to ProblemPointer" << std::endl;
+	}
+	else
+		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
+}
+
+void Simulator::addReceptor(float xPos, float yPos)
+{
+	BodyReceptorComposition* body = static_cast<BodyReceptorComposition*>(this->world.createBody(BODY_TYPE::RECEPTOR, xPos, yPos));
+	if (body != NULL)
+	{
+		ProblemPointer* castedProblem = static_cast<ProblemPointer*>(this->problem);
+		if (castedProblem != NULL)
+		{
+			AgentReceptorProblemPointer* agent = new AgentReceptorProblemPointer(castedProblem);
+			agent->connectCasted(body);
+			this->agents.push_back(agent);
+		}
+		else
+			std::cout << "ERROR : couldn't cast problem to ProblemPointer" << std::endl;
+	}
+	else
+		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
 }
 
 void Simulator::run(sf::Time refreshRate)
@@ -48,12 +80,16 @@ void Simulator::run(sf::Time refreshRate)
 			//std::cout << endl << "Simulator::Run : STARTING FRAME" << endl;
 
 			// UPDATE STUFF
+			// updating problem
+			this->problem->run(refreshRate);
+
 			this->world.update(refreshRate, startTime);
 
 			// Updating agents
-			int nbAgents = static_cast<int>(agents.size());
-			for (int i = 0; i < nbAgents; ++i)
-				agents[i]->live();
+			for (std::vector<Agent*>::iterator it = this->agents.begin(); it != this->agents.end(); ++it)
+			{
+				(*it)->live();
+			}
 
 			// Drawing
 			this->SFMLView.Draw();
@@ -86,6 +122,11 @@ void Simulator::run(sf::Time refreshRate)
 
 Simulator::~Simulator(void)
 {
+	for (std::vector<Agent*>::iterator it = this->agents.begin(); it != this->agents.end(); ++it)
+	{
+		delete (*it);
+		*it = NULL;
+	}
 }
 
 // Check simulation events
@@ -102,6 +143,13 @@ void Simulator::checkEvents()
                     finishSimulation = true;
                     break;
                 case sf::Event::KeyPressed :
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Escape :
+						this->window->close();
+						this->finishSimulation = true;
+						break;
+					}
                     if (event.key.code == sf::Keyboard::O)
                     {
                         if (this->world.toggleWaveOptimisation())

@@ -1,11 +1,32 @@
 #include "AgentEmitter.h"
 
-AgentEmitter::AgentEmitter(Problem* problem, Body* body) : Agent(problem, body)
+AgentEmitter::AgentEmitter(Problem* problem, BodyEmitter* body) : Agent(problem, body), castedBody(body)
 {
-    this->state = state;
+    //this->state = state;
+	connectCasted(body);
 }
 
 void AgentEmitter::live()
 {
-	((BodyEmitter*)this->body)->send(10.0f,1.0f);
+	((BodyEmitter*)this->body)->send(1.0f,1.0f);
+}
+
+AgentEmitter::~AgentEmitter(void)
+{
+	Agent::connect(body);
+}
+
+void AgentEmitter::connectCasted(BodyEmitter* body)
+{
+	if (body != NULL)
+	{
+		Agent::connect(body);
+		this->castedBody = body;
+	}
+}
+
+void AgentEmitter::disconnect()
+{
+	Agent::disconnect();
+	this->castedBody = NULL;
 }

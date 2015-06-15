@@ -10,8 +10,6 @@
 * This is the base class for all receptors
 */
 
-
-
 class BodyReceptorComposition : public BodyReceptor
 {
 public:

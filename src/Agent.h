@@ -29,6 +29,9 @@ public:
 	virtual void connect(Body* body);
 	virtual void disconnect();
 
+	virtual bool isLinked();	// Checks if agent is linked to a body
+	virtual bool isProblemLinked();	// Cheks if agent is correctly linked to a problem
+
 	virtual void setProblem(Problem* problem);
 	Problem* getProblem();
 
