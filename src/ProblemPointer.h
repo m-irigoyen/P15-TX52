@@ -27,7 +27,7 @@ public:
 	void setSecondPointerPosition(float x, float y);
 	void getMousePointerPosition(float& x, float& y);
 	void getSecondPointerPosition(float& x, float& y);
-	void setCurrentMouseX(float x, float y);
+	void setCurrentMouse(float x, float y);
 
 	void getWindowDimensions(int& width, int& height);
 };

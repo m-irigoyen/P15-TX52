@@ -1,7 +1,7 @@
 #include "GraphicView.h"
 
 
-GraphicView::GraphicView(void)
+GraphicView::GraphicView(sf::CircleShape& secondPointer) : secondPointer(secondPointer)
 {
 }
 
@@ -112,6 +112,8 @@ void GraphicView::Draw()
 	/*std::cout << "Wave size : " << this->waves.size() << std::endl;
 	std::cout << "World Wave size : " << worldWaves->size() << std::endl;*/
 #endif
+
+	this->window->draw(this->secondPointer);
 
 	window->display();
 }

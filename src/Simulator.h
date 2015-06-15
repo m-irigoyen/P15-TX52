@@ -28,10 +28,12 @@ class Simulator
 {
 private:
 	GraphicView SFMLView;
+	sf::RenderWindow* window;
+	
 	World world;    // The environment
 	std::vector<Agent*> agents; // All the agents
-    Problem* problem;   // The instance of the Problem.
-	sf::RenderWindow* window;
+    
+	
 
 	sf::Clock simulationClock;
 	bool finishSimulation;
@@ -40,6 +42,9 @@ private:
 	//User interface stuff
 	Body* selectedBody;
 
+	// ProblemPointer
+	ProblemPointer* problem;   // The instance of the Problem.
+	sf::CircleShape secondPointer;
 
 public:
 	Simulator();

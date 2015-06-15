@@ -1,10 +1,8 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL)
+Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL), SFMLView(this->secondPointer)
 {
-	this->problem = new ProblemPointer(400, 400);
-
 	this->SFMLView.Init(400, 400);
 
 	this->SFMLView.SetWorld(&this->world);
@@ -16,7 +14,7 @@ Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(fal
 void Simulator::init()
 {
 	std::cout << "Initialising" << std::endl;
-	this->problem = new ProblemPointer(500, 500);
+	this->problem = new ProblemPointer(500, 500, secondPointer);
 	
 	addEmitter(200,200);
 	addReceptor(400, 200);
@@ -92,7 +90,7 @@ void Simulator::run(sf::Time refreshRate)
 			}
 
 			// Drawing
-			this->SFMLView.Draw();
+			this->SFMLView.Draw();			
 
 			// Ending the frame
 			endTime = simulationClock.getElapsedTime();
@@ -171,9 +169,14 @@ void Simulator::checkEvents()
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && selectedBody != NULL)
                     {
                         selectedBody->SetPosition(event.mouseMove.x, event.mouseMove.y);
+						this->world.updateMaxWaveDistance();    // Recalculating max wave distance
                         //std::cout << "MOVING BODY TO " << event.mouseMove.x << "," << event.mouseMove.y <<  std::endl;
                     }
-                    this->world.updateMaxWaveDistance();    // Recalculating max wave distance
+					else
+					{
+						this->problem->setCurrentMouse(event.mouseMove.x, event.mouseMove.y);
+					}
+                    
                     break;
         }
 	}

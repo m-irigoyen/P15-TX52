@@ -28,8 +28,11 @@ private:
 	std::vector<sf::CircleShape> receptors;
 	std::vector<sf::CircleShape> emitters;
 	std::vector<sf::CircleShape> waves;
+
+	//PointerProblem stuff
+	sf::CircleShape& secondPointer;
 public:
-	GraphicView(void);
+	GraphicView(sf::CircleShape& secondPointer);
 
 	void Init(int height, int width);
 	int CheckEvent();
