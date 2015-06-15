@@ -2,13 +2,14 @@
 
 ProblemPointer::ProblemPointer(int width, int height, sf::CircleShape& secondPointer) : secondPointer(secondPointer), windowWidth(width), windowHeight(height)
 {
-	this->secondPointer.setFillColor(sf::Color::Red);
+	this->secondPointer.setFillColor(sf::Color::Blue);
 	this->secondPointer.setPosition(0.0f, 0.0f);
+	this->secondPointer.setRadius(8);
 }
 
 void ProblemPointer::run(sf::Time elapsedTime)
 {
-	
+
 }
 
 void ProblemPointer::setSecondPointerPosition(float x, float y)

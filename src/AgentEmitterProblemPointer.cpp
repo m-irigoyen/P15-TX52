@@ -18,19 +18,19 @@ void AgentEmitterProblemPointer::live()
 		return;
 	}
 
-	/*float mouseX, mouseY;
+	float mouseX, mouseY;
 	int windowWidth, windowHeight;
-	
+
 	this->castedProblem->getMousePointerPosition(mouseX, mouseY);
 	this->castedProblem->getWindowDimensions(windowWidth, windowHeight);
 
 	// Encoding x/y position
-	float frequency = ((mouseX * 5) / (float)windowWidth) + 2;	// offsetting a bit, to make sure wave transmission is kept
-	float amplitude = ((mouseX * 10) / (float)windowWidth) + 1;
+	float frequency = ((mouseX) / (float)windowWidth) + 1;	// offsetting a bit, to make sure wave transmission is kept
+	float amplitude = ((mouseX) / (float)windowHeight) +1;
 
 	this->castedBody->send(frequency, amplitude);
-	std::cout << "Emitting : " << frequency << ", " << amplitude << std::endl;;*/
-	this->castedBody->send(2.0f, 1.0f);
+	//std::cout << "Emitting : " << frequency << ", " << amplitude << std::endl;;
+	//this->castedBody->send(2.0f, 1.0f);
 }
 
 // Checks if agent is linked to a body

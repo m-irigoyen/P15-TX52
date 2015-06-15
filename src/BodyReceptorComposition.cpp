@@ -38,7 +38,8 @@ WAVE_COMPOSITION BodyReceptorComposition::getPerception()
 			// Then update the ammplitude
 			this->currentPerception.amplitude += it->second.second.second;
 		}
-	}
+    }
+	//std::cout << "Returning : " << this->currentPerception.frequency << "," << this->currentPerception.amplitude << std::endl;
 	return this->currentPerception;
 }
 
@@ -59,7 +60,7 @@ float BodyReceptorComposition::calculateValueAtT(sf::Time t)
 float BodyReceptorComposition::calculateValueAtT(sf::Time t, sf::Time firstContact, float frequency, float amplitude)
 {
     sf::Time elapsedTime = t - firstContact;
-	if (frequency < 0.0f)	
+	if (frequency < 0.0f)
 	{
 		// Frequency hasn't been computed yet
 		return 0.0f;

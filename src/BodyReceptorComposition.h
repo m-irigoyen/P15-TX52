@@ -4,6 +4,7 @@
 #include "BodyReceptor.h"
 
 #define PI (3.141592653589793)
+#include <math.h>
 
 /*
 * Receptor bodies can percieve waves in the world.

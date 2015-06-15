@@ -26,14 +26,14 @@ void AgentReceptorProblemPointer::live()
 	this->castedProblem->getWindowDimensions(windowWidth, windowHeight);
 
 	// Decoding x/y position
-	perception.frequency += 2;
-	mouseX = (perception.frequency * windowWidth) / 5;
+	perception.frequency -= 1;
+	mouseX = (perception.frequency * windowWidth);
 
-	perception.amplitude += 1;
-	mouseY = (perception.amplitude * windowHeight) / 10;
+	perception.amplitude -= 1;
+	mouseY = (perception.amplitude * windowHeight);
 
 	this->castedProblem->setSecondPointerPosition(mouseX, mouseY);
-	//std::cout << "Setting second pointer position at : " << mouseX << "," << mouseY << std::endl;
+	std::cout << "Percieved : " << perception.frequency << " | " << perception.amplitude << " -> " << mouseX << " | " << mouseY << std::endl;
 }
 
 bool AgentReceptorProblemPointer::isLinked()
