@@ -29,14 +29,21 @@ private:
 	std::vector<sf::CircleShape> emitters;
 	std::vector<sf::CircleShape> waves;
 
+	// display stuff
+	bool displayWaves;
+
 	//PointerProblem stuff
 	sf::CircleShape& secondPointer;
+
 public:
 	GraphicView(sf::CircleShape& secondPointer);
 
 	void Init(int height, int width);
 	int CheckEvent();
 	void Draw();
+
+	void setDisplayWaves(bool displayWaves);
+	void toggleDisplayWaves();
 
 	sf::RenderWindow* getWindow();
 

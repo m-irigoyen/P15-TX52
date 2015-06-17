@@ -26,11 +26,11 @@ void AgentReceptorProblemPointer::live()
 	this->castedProblem->getWindowDimensions(windowWidth, windowHeight);
 
 	// Decoding x/y position
-	perception.frequency -= 1;
-	mouseX = (perception.frequency * windowWidth) / 10;
+	perception.frequency -= this->castedProblem->getFrequencyOffset();
+	mouseX = (perception.frequency * windowWidth) / FREQUENCY_RANGE;
 
-	perception.amplitude -= 1;
-	mouseY = (perception.amplitude * windowHeight);
+	perception.amplitude -= AMPLITUDE_OFFSET;
+	mouseY = (perception.amplitude * windowHeight) / AMPLITUDE_RANGE;
 
 	this->castedProblem->setSecondPointerPosition(mouseX, mouseY);
 	//this->castedProblem->setSecondPointerPosition(50, mouseY);

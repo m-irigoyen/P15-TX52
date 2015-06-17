@@ -68,54 +68,71 @@ void GraphicView::Draw()
 
 #ifndef SKIP_WAVES
 	//Waves
-	std::vector<Wave*>* worldWaves = this->world->getWaves();
-	if (this->waves.size() != worldWaves->size())
+	if (displayWaves)
 	{
-		this->waves.clear();
-		for (int i = 0; i < worldWaves->size(); ++i)
+		std::vector<Wave*>* worldWaves = this->world->getWaves();
+		if (this->waves.size() != worldWaves->size())
 		{
-			//this->waves.push_back(sf::CircleShape(WAVE_SIZE));
+			this->waves.clear();
+			for (int i = 0; i < worldWaves->size(); ++i)
+			{
+				//this->waves.push_back(sf::CircleShape(WAVE_SIZE));
 
-			sf::CircleShape newWave(0.0f);
-			// Setting color
-			newWave.setFillColor(sf::Color(255, 255, 255,0));
-			newWave.setOutlineColor(sf::Color(0, 0, 255,255));
-			newWave.setOutlineThickness(1);
+				sf::CircleShape newWave(0.0f);
+				// Setting color
+				newWave.setFillColor(sf::Color(255, 255, 255, 0));
+				newWave.setOutlineColor(sf::Color(0, 0, 255, 255));
+				newWave.setOutlineThickness(1);
 
-			// Setting origin
-			float x;
-			float y;
-			worldWaves->at(i)->GetPosition(x, y);
-			newWave.setPosition(x, y);
-//			std::cout << "New wave origin : " << x << "," << y << endl;
+				// Setting origin
+				float x;
+				float y;
+				worldWaves->at(i)->GetPosition(x, y);
+				newWave.setPosition(x, y);
+				//			std::cout << "New wave origin : " << x << "," << y << endl;
 
 
-			/*this->waves.at(this->waves.size() - 1).setFillColor(sf::Color(255, 255, 255, 1));
-			this->waves.at(this->waves.size() - 1).setOutlineColor(sf::Color(0, 0, 255));*/
+				/*this->waves.at(this->waves.size() - 1).setFillColor(sf::Color(255, 255, 255, 1));
+				this->waves.at(this->waves.size() - 1).setOutlineColor(sf::Color(0, 0, 255));*/
 
-			this->waves.push_back(newWave);
+				this->waves.push_back(newWave);
+			}
 		}
-	}
 
-	int cpt = 0;
-	for (int idCurrentWave = 0; idCurrentWave < worldWaves->size(); ++idCurrentWave)
-	{
-		this->waves[idCurrentWave].setOrigin(worldWaves->at(idCurrentWave)->getRadius(), worldWaves->at(idCurrentWave)->getRadius());
-		this->waves[idCurrentWave].setRadius(worldWaves->at(idCurrentWave)->getRadius());
-		window->draw(this->waves[idCurrentWave]);
+		int cpt = 0;
+		for (int idCurrentWave = 0; idCurrentWave < worldWaves->size(); ++idCurrentWave)
+		{
+			this->waves[idCurrentWave].setOrigin(worldWaves->at(idCurrentWave)->getRadius(), worldWaves->at(idCurrentWave)->getRadius());
+			this->waves[idCurrentWave].setRadius(worldWaves->at(idCurrentWave)->getRadius());
+			window->draw(this->waves[idCurrentWave]);
 
-		/*std::cout << "Drawing a wave at " << this->waves[idCurrentWave].getPosition().x << "," << this->waves[idCurrentWave].getPosition().y <<
+			/*std::cout << "Drawing a wave at " << this->waves[idCurrentWave].getPosition().x << "," << this->waves[idCurrentWave].getPosition().y <<
 			", radius : " << this->waves[idCurrentWave].getRadius() << std::endl;*/
-		++cpt;
-	}
+			++cpt;
+		}
 
-	/*std::cout << "Wave size : " << this->waves.size() << std::endl;
-	std::cout << "World Wave size : " << worldWaves->size() << std::endl;*/
+		/*std::cout << "Wave size : " << this->waves.size() << std::endl;
+		std::cout << "World Wave size : " << worldWaves->size() << std::endl;*/
+	}
+	
 #endif
 
 	this->window->draw(this->secondPointer);
 
 	window->display();
+}
+
+void GraphicView::setDisplayWaves(bool displayWaves)
+{
+	this->displayWaves = displayWaves;
+}
+
+void GraphicView::toggleDisplayWaves()
+{
+	if (this->displayWaves)
+		this->displayWaves = false;
+	else
+		this->displayWaves = true;
 }
 
 void GraphicView::SetWorld(World* world)

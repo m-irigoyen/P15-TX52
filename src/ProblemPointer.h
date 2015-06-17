@@ -5,6 +5,11 @@
 #include "Problem.h"
 #include <SFML/Graphics.hpp>
 
+#define FREQUENCY_OFFSET 10
+#define FREQUENCY_RANGE 1
+#define AMPLITUDE_OFFSET 1
+#define AMPLITUDE_RANGE 1
+
 /*
 * The Problem class creates and run the problem to be solved. (pendulum, drone, etc)
 */
@@ -19,6 +24,8 @@ protected:
 
 	float currentMouseX;
 	float currentMouseY;
+
+	float frequencyOffset;
 public:
 	ProblemPointer(int width, int height, sf::CircleShape& secondPointer);
 
@@ -30,6 +37,10 @@ public:
 	void setCurrentMouse(float x, float y);
 
 	void getWindowDimensions(int& width, int& height);
+
+	float getFrequencyOffset();
+	void incrementFrequencyOffset();
+	void decrementFrequencyOffset();
 };
 
 #endif

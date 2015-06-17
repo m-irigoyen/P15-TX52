@@ -147,14 +147,24 @@ void Simulator::checkEvents()
 						this->window->close();
 						this->finishSimulation = true;
 						break;
+					case sf::Keyboard::O :
+						if (this->world.toggleWaveOptimisation())
+							std::cout << "Wave optimisation : on" << std::endl;
+						else
+							std::cout << "Wave optimisation : off" << std::endl;
+						break;
+					case sf::Keyboard::D :
+						this->SFMLView.toggleDisplayWaves();
+						break;
+					case sf::Keyboard::Add:
+						this->problem->incrementFrequencyOffset();
+						std::cout << "FrequencyOffset : " << this->problem->getFrequencyOffset() << std::endl;
+						break;
+					case sf::Keyboard::Subtract:
+						this->problem->decrementFrequencyOffset();
+						std::cout << "FrequencyOffset : " << this->problem->getFrequencyOffset() << std::endl;
+						break;
 					}
-                    if (event.key.code == sf::Keyboard::O)
-                    {
-                        if (this->world.toggleWaveOptimisation())
-                            std::cout << "Wave optimisation : on" << std::endl;
-                        else
-                            std::cout << "Wave optimisation : off" << std::endl;
-                    }
                     break;
                 case sf::Event::MouseButtonPressed :
                     if (event.mouseButton.button == sf::Mouse::Left)

@@ -210,18 +210,29 @@ void World::checkCollisionEvents(Wave* wave, sf::Time elapsedTime)
 		{
 			if (!wave->hasCollided((*it)->getId()))
 			{
-                float distanceEmitterReceptor = calculateDistance(xWave, yWave, x1, y1);
+				//std::cout << "Wave Collision : " << std::endl;
+				
+                float distanceEmitterReceptor = calculateDistance(xWave, yWave, x1, y1);				
                 float distanceWaveReceptor = wave->getRadius() - distanceEmitterReceptor;
+				//std::cout << "  distanceEmitterReceptor : " << distanceEmitterReceptor << std::endl;
+				//std::cout << "  distanceWaveReceptor : " << distanceWaveReceptor << std::endl;
+				
 
+				float waveSpeed = wave->getSpeed();
+				if (waveSpeed <= 0.0f)
+				{
+					waveSpeed = DEFAULT_PROPAGATION_SPEED;
+				}
+
+				//std::cout << "	testDistance : " << calculateTimeElapsedInDistance(waveSpeed, distanceWaveReceptor).asSeconds() << " speed(" << waveSpeed << ")" << std::endl;
+
+				//std::cout << "  currentTime : " << this->currentFrameTime.asSeconds() << std::endl;
+				sf::Time displayT = this->currentFrameTime - this->calculateTimeElapsedInDistance(waveSpeed, distanceWaveReceptor);
+				//std::cout << "  correctedTime : " << displayT.asSeconds() << std::endl;
 				wave->onCollisionEvent((*it)->getId());
 				(*it)->onWaveCollision(wave->getEmitterId(),
-				this->currentFrameTime - calculateTimeElapsedInDistance(1.0f, distanceWaveReceptor),
+				displayT,
 				wave->getAmplitude());
-
-				std::cout << "Wave Collision : " << std::endl;
-				std::cout << "  currentTime : " << this->currentFrameTime.asSeconds() << std::endl;
-				sf::Time displayT = this->currentFrameTime - this->calculateTimeElapsedInDistance(1.0f, distanceWaveReceptor);
-				std::cout << "  correctedTime : " << displayT.asSeconds() << std::endl;
 			}
 		}
 	}
@@ -237,7 +248,7 @@ bool World::distanceCheck(float x1, float y1, float x2, float y2, float minDista
 
 sf::Time World::calculateTimeElapsedInDistance(float speed, float distance)
 {
-    return sf::seconds(speed*distance);
+    return sf::seconds(distance/speed);
 }
 
 float World::calculateDistance(float x1, float y1, float x2, float y2)

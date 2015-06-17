@@ -1,8 +1,8 @@
 #include "ProblemPointer.h"
 
-ProblemPointer::ProblemPointer(int width, int height, sf::CircleShape& secondPointer) : secondPointer(secondPointer), windowWidth(width), windowHeight(height)
+ProblemPointer::ProblemPointer(int width, int height, sf::CircleShape& secondPointer) : secondPointer(secondPointer), windowWidth(width), windowHeight(height), frequencyOffset(FREQUENCY_OFFSET)
 {
-	this->secondPointer.setFillColor(sf::Color::Blue);
+	this->secondPointer.setFillColor(sf::Color::Yellow);
 	this->secondPointer.setPosition(0.0f, 0.0f);
 	this->secondPointer.setRadius(8);
 }
@@ -39,4 +39,24 @@ void ProblemPointer::getWindowDimensions(int& width, int& height)
 {
 	width = this->windowWidth;
 	height = this->windowHeight;
+}
+
+float ProblemPointer::getFrequencyOffset()
+{
+	return this->frequencyOffset;
+}
+
+void ProblemPointer::incrementFrequencyOffset()
+{
+	++this->frequencyOffset;
+	if (this->frequencyOffset > 40)
+		frequencyOffset = 40;
+}
+
+void ProblemPointer::decrementFrequencyOffset()
+{
+	--this->frequencyOffset;
+	if (this->frequencyOffset < 1)
+		frequencyOffset = 1;
+
 }
