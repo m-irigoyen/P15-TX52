@@ -7,7 +7,7 @@ Emitter::Emitter() : sending(false), currentAmplitude(-1.0f), currentFrequency(-
 }
 
 
-void Emitter::send(float frequency, float amplitude, float speed)
+void Emitter::send(double frequency, double amplitude, double speed)
 {
 	if (frequency <= 0.0f || amplitude <= 0.0f)
 		return;	//Can't have negative values
@@ -39,7 +39,6 @@ bool Emitter::checkForSend(sf::Time currentTime)
 		{
 			return true;
 		}
-			
 	}
 	return false;
 }
@@ -71,6 +70,12 @@ void Emitter::setLastSendTime(sf::Time newLastSendTime)
 sf::Time Emitter::getLastSendTime()
 {
 	return this->lastSendTime;
+}
+
+sf::Time Emitter::getNextSendTime()
+{
+    //sf::Time t = sf::seconds(this->lastSendTime.asSeconds() + (1/this->currentFrequency));
+    return getTimeFromFrequency(this->currentFrequency) + this->lastSendTime;
 }
 
 float Emitter::getCurrentAmplitude()

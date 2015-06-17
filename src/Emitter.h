@@ -25,7 +25,7 @@ public:
 	Emitter();
 
 	virtual void initialise() = 0;	// Perform initialisation specific tasks
-	virtual void send(float frequency, float amplitude, float speed = -1.0f);
+	virtual void send(double frequency, double amplitude, double speed = -1.0f);
 
 	/**
 	*	This will check if the emitter is sending, and if it is, if a new peak needs to be sent. (And if that is the case, it'll send it for you)
@@ -40,6 +40,7 @@ public:
 
 	// Getters
 	virtual sf::Time getLastSendTime();
+	virtual sf::Time getNextSendTime();
 	virtual float getCurrentAmplitude();
 	virtual float getCurrentFrequency();
 	virtual float getCurrentSpeed();

@@ -34,6 +34,7 @@ private:
 	void checkWaveCreation(BodyEmitter* emitter);
 	bool distanceCheck(float x1, float y1, float x2, float y2, float minDistance, float maxDistance);
 
+    sf::Time calculateTimeElapsedInDistance(float speed, float distance);
 
 	float calculateDistance(float x1, float y1, float x2, float y2);
 	float calculateDistance(std::vector<float> pos1, std::vector<float> pos2);

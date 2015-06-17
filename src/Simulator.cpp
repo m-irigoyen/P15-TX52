@@ -1,7 +1,7 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL), SFMLView(this->secondPointer)
+Simulator::Simulator() : world(&simulationClock, 400, 400), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL), SFMLView(this->secondPointer)
 {
 	this->SFMLView.Init(400, 400);
 
@@ -14,8 +14,8 @@ Simulator::Simulator() : world(&simulationClock, 800, 800), finishSimulation(fal
 void Simulator::init()
 {
 	std::cout << "Initialising" << std::endl;
-	this->problem = new ProblemPointer(500, 500, secondPointer);
-	
+	this->problem = new ProblemPointer(400, 400, secondPointer);
+
 	addEmitter(200,200);
 	addReceptor(400, 200);
 	std::cout << "Init done" << std::endl;
@@ -90,7 +90,7 @@ void Simulator::run(sf::Time refreshRate)
 			}
 
 			// Drawing
-			this->SFMLView.Draw();			
+			this->SFMLView.Draw();
 
 			// Ending the frame
 			endTime = simulationClock.getElapsedTime();
@@ -176,7 +176,7 @@ void Simulator::checkEvents()
 					{
 						this->problem->setCurrentMouse(event.mouseMove.x, event.mouseMove.y);
 					}
-                    
+
                     break;
         }
 	}

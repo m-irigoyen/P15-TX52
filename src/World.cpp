@@ -107,7 +107,6 @@ void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 {
 	this->currentFrameTime = currentFrameTime;
 
-
 	// Updating emitters
 	for (std::vector<BodyEmitter*>::iterator it = this->emitters.begin();
 		it != this->emitters.end();
@@ -211,8 +210,18 @@ void World::checkCollisionEvents(Wave* wave, sf::Time elapsedTime)
 		{
 			if (!wave->hasCollided((*it)->getId()))
 			{
+                float distanceEmitterReceptor = calculateDistance(xWave, yWave, x1, y1);
+                float distanceWaveReceptor = wave->getRadius() - distanceEmitterReceptor;
+
 				wave->onCollisionEvent((*it)->getId());
-				(*it)->onWaveCollision(wave->getEmitterId(), this->currentFrameTime, wave->getAmplitude());
+				(*it)->onWaveCollision(wave->getEmitterId(),
+				this->currentFrameTime - calculateTimeElapsedInDistance(1.0f, distanceWaveReceptor),
+				wave->getAmplitude());
+
+				std::cout << "Wave Collision : " << std::endl;
+				std::cout << "  currentTime : " << this->currentFrameTime.asSeconds() << std::endl;
+				sf::Time displayT = this->currentFrameTime - this->calculateTimeElapsedInDistance(1.0f, distanceWaveReceptor);
+				std::cout << "  correctedTime : " << displayT.asSeconds() << std::endl;
 			}
 		}
 	}
@@ -224,6 +233,11 @@ bool World::distanceCheck(float x1, float y1, float x2, float y2, float minDista
 	if (distanceBetweenPoints > maxDistance || distanceBetweenPoints < minDistance)
 		return false;
 	return true;
+}
+
+sf::Time World::calculateTimeElapsedInDistance(float speed, float distance)
+{
+    return sf::seconds(speed*distance);
 }
 
 float World::calculateDistance(float x1, float y1, float x2, float y2)
@@ -275,7 +289,19 @@ void World::checkWaveCreation(BodyEmitter* emitter)
 {
 	if (emitter->checkForSend(this->currentFrameTime))
 	{
-		createWave(emitter->GetPosition(), emitter->getId(), emitter->getCurrentSpeed(), emitter->getCurrentAmplitude());
-		emitter->setLastSendTime(this->currentFrameTime);
+		Wave* w = createWave(emitter->GetPosition(), emitter->getId(), emitter->getCurrentSpeed(), emitter->getCurrentAmplitude());
+
+		sf::Time newLastSendTime = emitter->getNextSendTime();
+		sf::Time delay = this->currentFrameTime - newLastSendTime;
+
+        w->setRadius(delay.asSeconds()*w->getSpeed());
+
+		emitter->setLastSendTime(newLastSendTime);
+
+		/*std::cout << "Creating new wave : " << std::endl;
+		std::cout << "  NewSendTime  : " << newLastSendTime.asSeconds() << std::endl;
+		std::cout << "  NextSendTime : " << emitter->getNextSendTime().asSeconds() << std::endl;
+		std::cout << "  Delay  : " << delay.asSeconds() << std::endl;
+		std::cout << "  Radius : " << delay.asSeconds()*w->getSpeed() << std::endl;*/
 	}
 }

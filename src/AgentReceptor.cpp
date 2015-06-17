@@ -7,9 +7,9 @@ AgentReceptor::AgentReceptor(Problem* problem, BodyReceptorComposition* body) : 
 
 void AgentReceptor::live()
 {
-    Perception p = ((BodyEmitter*)this->body).getPerception();
+    //Perception p = ((BodyEmitter*)this->body).getPerception();
 
-    ((Pendulum*)this->problem)->act(-1*p.amplitude);
+    //((Pendulum*)this->problem)->act(-1*p.amplitude);
 }
 
 
