@@ -26,11 +26,11 @@
 #include "Network.h"
 //#include <SFML/Graphics.hpp>
 
-#define FREQUENCY_OFFSET 10
-#define FREQUENCY_RANGE 1000
-#define FREQUENCY_MARGIN 100
-#define AMPLITUDE_OFFSET 1
-#define AMPLITUDE_RANGE 1
+#define FREQUENCY_OFFSET_D 10
+#define FREQUENCY_RANGE_D 1000
+#define FREQUENCY_MARGIN_D 100
+#define AMPLITUDE_OFFSET_D 1
+#define AMPLITUDE_RANGE_D 1
 
 using namespace std;
 
@@ -60,7 +60,7 @@ protected:
 	int nbDrones;	// The number of drones
 	
 public:
-	ProblemDrones(std::map<int,int> behaviourTable, int numberOfDrones);
+	ProblemDrones(std::map<int,DRONE_BEHAVIOURS> behaviourTable, int numberOfDrones);
 
 	virtual void run(sf::Time elapsedTime);	// run the whole thing
 

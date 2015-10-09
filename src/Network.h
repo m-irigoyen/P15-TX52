@@ -39,6 +39,5 @@ private:
 	void cleanMessage(string& message);	// Removes empty spaces at the front and back of the string
 };
 
-
 #endif
 

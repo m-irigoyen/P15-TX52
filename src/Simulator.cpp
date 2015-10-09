@@ -3,10 +3,10 @@
 
 Simulator::Simulator() : world(&simulationClock, 400, 400), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL), SFMLView(this->secondPointer)
 {
-	this->SFMLView.Init(400, 400);
+//	this->SFMLView.Init(400, 400);
 
-	this->SFMLView.SetWorld(&this->world);
-	this->window = this->SFMLView.getWindow();
+	//this->SFMLView.SetWorld(&this->world);
+	//this->window = this->SFMLView.getWindow();
 
 	init();
 }
@@ -14,7 +14,9 @@ Simulator::Simulator() : world(&simulationClock, 400, 400), finishSimulation(fal
 void Simulator::init()
 {
 	std::cout << "Initialising" << std::endl;
-	this->problem = new ProblemPointer(400, 400, secondPointer);
+	//this->problem = new ProblemPointer(400, 400, secondPointer);
+	std::map<int, DRONE_BEHAVIOURS> behaviourTable;
+	this->problem = new ProblemDrones(behaviourTable, 1);
 
 	addEmitter(200,200);
 	addReceptor(400, 200);
@@ -26,10 +28,10 @@ void Simulator::addEmitter(float xPos, float yPos)
 	BodyEmitter* body = static_cast<BodyEmitter*>(this->world.createBody(BODY_TYPE::EMITTER, xPos, yPos));
 	if (body != NULL)
 	{
-		ProblemPointer* castedProblem = static_cast<ProblemPointer*>(this->problem);
+		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
 		if (castedProblem != NULL)
 		{
-			AgentEmitterProblemPointer* agent = new AgentEmitterProblemPointer(castedProblem);
+			AgentEmitterProblemDrones* agent = new AgentEmitterProblemDrones(castedProblem);
 			agent->connectCasted(body);
 			this->agents.push_back(agent);
 		}
@@ -45,15 +47,15 @@ void Simulator::addReceptor(float xPos, float yPos)
 	BodyReceptorComposition* body = static_cast<BodyReceptorComposition*>(this->world.createBody(BODY_TYPE::RECEPTOR, xPos, yPos));
 	if (body != NULL)
 	{
-		ProblemPointer* castedProblem = static_cast<ProblemPointer*>(this->problem);
+		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
 		if (castedProblem != NULL)
 		{
-			AgentReceptorProblemPointer* agent = new AgentReceptorProblemPointer(castedProblem);
+			AgentReceptorProblemDrones* agent = new AgentReceptorProblemDrones(castedProblem);
 			agent->connectCasted(body);
 			this->agents.push_back(agent);
 		}
 		else
-			std::cout << "ERROR : couldn't cast problem to ProblemPointer" << std::endl;
+			std::cout << "ERROR : couldn't cast problem to ProblemDrones" << std::endl;
 	}
 	else
 		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
@@ -157,12 +159,12 @@ void Simulator::checkEvents()
 						this->SFMLView.toggleDisplayWaves();
 						break;
 					case sf::Keyboard::A:
-						this->problem->incrementFrequencyOffset();
-						std::cout << "FrequencyOffset : " << this->problem->getFrequencyOffset() << std::endl;
+						//this->problem->incrementFrequencyOffset();
+						//std::cout << "FrequencyOffset : " << this->problem->getFrequencyOffset() << std::endl;
 						break;
 					case sf::Keyboard::E:
-						this->problem->decrementFrequencyOffset();
-						std::cout << "FrequencyOffset : " << this->problem->getFrequencyOffset() << std::endl;
+						//this->problem->decrementFrequencyOffset();
+						//std::cout << "FrequencyOffset : " << this->problem->getFrequencyOffset() << std::endl;
 						break;
 					}
                     break;
@@ -188,7 +190,7 @@ void Simulator::checkEvents()
                     }
 					else
 					{
-						this->problem->setCurrentMouse(event.mouseMove.x, event.mouseMove.y);
+						//this->problem->setCurrentMouse(event.mouseMove.x, event.mouseMove.y);
 					}
 
                     break;

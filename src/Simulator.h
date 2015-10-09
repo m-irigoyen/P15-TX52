@@ -12,6 +12,10 @@
 #include "AgentEmitterProblemPointer.h"
 #include "AgentReceptorProblemPointer.h"
 
+#include "ProblemDrones.h"
+#include "AgentEmitterProblemDrones.h"
+#include "AgentReceptorProblemDrones.h"
+
 
 /*
 *   The Simulator is the main class of the project.
@@ -32,8 +36,6 @@ private:
 	
 	World world;    // The environment
 	std::vector<Agent*> agents; // All the agents
-    
-	
 
 	sf::Clock simulationClock;
 	bool finishSimulation;
@@ -43,7 +45,8 @@ private:
 	Body* selectedBody;
 
 	// ProblemPointer
-	ProblemPointer* problem;   // The instance of the Problem.
+	//ProblemPointer* problem;   // The instance of the Problem.
+	ProblemDrones* problem;   // The instance of the Problem.
 	sf::CircleShape secondPointer;
 
 public:

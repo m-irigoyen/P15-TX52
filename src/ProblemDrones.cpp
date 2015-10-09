@@ -1,6 +1,6 @@
 #include "ProblemDrones.h"
 
-ProblemDrones::ProblemDrones(std::map<int, int> behaviourTable, int numberOfDrones)
+ProblemDrones::ProblemDrones(std::map<int, DRONE_BEHAVIOURS> behaviourTable, int numberOfDrones)
 {
 }
 
@@ -33,7 +33,7 @@ DRONE_BEHAVIOURS ProblemDrones::getBehaviour(int frequency)
 	for (map<int, DRONE_BEHAVIOURS>::iterator it = this->behaviourTable.begin(); it != this->behaviourTable.end(); ++it)
 	{
 		// We went too far : frequency is now smaller than the one we're looking at
-		if (frequency >= it->first-100 && frequency <= it->first + 1000)
+		if (frequency >= it->first-FREQUENCY_MARGIN_D && frequency <= it->first + FREQUENCY_RANGE_D + FREQUENCY_MARGIN_D)
 		{
 			return it->second;
 		}
