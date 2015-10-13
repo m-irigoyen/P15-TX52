@@ -22,6 +22,8 @@
 */
 
 #include <iostream>
+#include <deque>
+#include <string>
 #include "Problem.h"
 #include "Network.h"
 //#include <SFML/Graphics.hpp>
@@ -54,15 +56,20 @@ class ProblemDrones : public Problem
 protected:
 	std::map<int, DRONE_BEHAVIOURS> behaviourTable;	// Lookup table for behaviours : <frequency, behaviour>
 	Network unityConnection;
+	deque<string> messages;
 
 	map<int, droneOrder> droneCommands;	// Orders that the Problem will transmit to Unity
 
 	int nbDrones;	// The number of drones
+
+
 	
 public:
 	ProblemDrones(std::map<int,DRONE_BEHAVIOURS> behaviourTable, int numberOfDrones);
 
 	virtual void run(sf::Time elapsedTime);	// run the whole thing
+
+	bool init(int portNumber = 13374);	// Inits connection with Unity
 
 	int getNumberOfDrones();
 

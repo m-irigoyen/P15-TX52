@@ -6,17 +6,20 @@
 
 #include "PhysicalObject.h"
 
+#define COEFF_ATTENUATION 1
+
 using namespace std;
 
 class Wave : public PhysicalObject
 {
 public :
 	//Constructor
-	Wave(Semantic type, float x, float y, int emitterId, float speed, float amplitude);
+	Wave(Semantic type, float x, float y, int emitterId, float speed, float amplitude, float ampLossPerSec = 50.0f);
 	
 
 	//Getter
 	float getAmplitude();
+	float getAmplitudeLossPerSecond();
 	float getSpeed();
 	float getRadius();
 	int getEmitterId();
@@ -25,6 +28,7 @@ public :
 
 	//Other
 	void update(sf::Time elapsedTime);
+	bool attenuate(sf::Time elapsedTime);	// Returns true if wave is to be destroyed
 
 	// Encountered receptors
 	bool hasCollided(int receptorId);
@@ -33,8 +37,10 @@ public :
 private :
 	float m_radius;
 	const float m_speed;
-	const float m_amplitude;
+	float m_amplitude;
 	const int emitterId;
+
+	float amplitudeLossPerSecond;
 
 	std::vector<int> collidedReceptors;
 };

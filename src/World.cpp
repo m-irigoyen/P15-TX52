@@ -123,17 +123,22 @@ void World::update(sf::Time elapsedTime, sf::Time currentFrameTime)
 	while (it != this->waves.end())
 	{
 		(*it)->update(elapsedTime);
-		checkCollisionEvents((*it), elapsedTime);	// Else, check for collisions
-		if (optimiseWaveTravelDistance && (*it)->getRadius() > this->maxWaveDistance)	// If the wave has reached max distance : erase it
-		{
+		if ((*it)->attenuate(elapsedTime))
 			it = this->waves.erase(it);
-		}
-		else if ((*it)->getRadius() > this->maxWorldDistance)
-		{
-			it = this->waves.erase(it);
-		}
 		else
-			++it;
+		{
+			checkCollisionEvents((*it), elapsedTime);	// Else, check for collisions
+			if (optimiseWaveTravelDistance && (*it)->getRadius() > this->maxWaveDistance)	// If the wave has reached max distance : erase it
+			{
+				it = this->waves.erase(it);
+			}
+			else if ((*it)->getRadius() > this->maxWorldDistance)
+			{
+				it = this->waves.erase(it);
+			}
+			else
+				++it;
+		}
 	}
 
 	// updating receptors

@@ -13,8 +13,8 @@
 #include "AgentReceptorProblemPointer.h"
 
 #include "ProblemDrones.h"
-#include "AgentEmitterProblemDrones.h"
-#include "AgentReceptorProblemDrones.h"
+#include "AgentHybridProblemDrones.h"
+#include "BodyHybrid.h"
 
 
 /*
@@ -47,7 +47,6 @@ private:
 	// ProblemPointer
 	//ProblemPointer* problem;   // The instance of the Problem.
 	ProblemDrones* problem;   // The instance of the Problem.
-	sf::CircleShape secondPointer;
 
 public:
 	Simulator();
@@ -56,6 +55,7 @@ public:
     // Creates a body for the given agent at given position, then adds this agent to the list,
 	void addEmitter(float xPos, float yPos);
 	void addReceptor(float xPos, float yPos);
+	void addHybrid(float xPos, float yPos);
 
 	void checkEvents();	// Check simulation events
 	void run(sf::Time refreshRate);

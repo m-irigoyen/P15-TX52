@@ -1,12 +1,12 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : world(&simulationClock, 400, 400), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL), SFMLView(this->secondPointer)
+Simulator::Simulator() : world(&simulationClock, 400, 400), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL)
 {
-//	this->SFMLView.Init(400, 400);
+	this->SFMLView.Init(400, 400);
 
-	//this->SFMLView.SetWorld(&this->world);
-	//this->window = this->SFMLView.getWindow();
+	this->SFMLView.SetWorld(&this->world);
+	this->window = this->SFMLView.getWindow();
 
 	init();
 }
@@ -18,14 +18,14 @@ void Simulator::init()
 	std::map<int, DRONE_BEHAVIOURS> behaviourTable;
 	this->problem = new ProblemDrones(behaviourTable, 1);
 
-	addEmitter(200,200);
-	addReceptor(400, 200);
+	//addEmitter(200,200);
+	//addReceptor(400, 200);
 	std::cout << "Init done" << std::endl;
 }
 
 void Simulator::addEmitter(float xPos, float yPos)
 {
-	BodyEmitter* body = static_cast<BodyEmitter*>(this->world.createBody(BODY_TYPE::EMITTER, xPos, yPos));
+	/*BodyEmitter* body = static_cast<BodyEmitter*>(this->world.createBody(BODY_TYPE::EMITTER, xPos, yPos));
 	if (body != NULL)
 	{
 		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
@@ -39,12 +39,12 @@ void Simulator::addEmitter(float xPos, float yPos)
 			std::cout << "ERROR : couldn't cast problem to ProblemPointer" << std::endl;
 	}
 	else
-		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
+		std::cout << "ERROR : couldn't cast resulting body" << std::endl;*/
 }
 
 void Simulator::addReceptor(float xPos, float yPos)
 {
-	BodyReceptorComposition* body = static_cast<BodyReceptorComposition*>(this->world.createBody(BODY_TYPE::RECEPTOR, xPos, yPos));
+	/*BodyReceptorComposition* body = static_cast<BodyReceptorComposition*>(this->world.createBody(BODY_TYPE::RECEPTOR, xPos, yPos));
 	if (body != NULL)
 	{
 		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
@@ -58,7 +58,26 @@ void Simulator::addReceptor(float xPos, float yPos)
 			std::cout << "ERROR : couldn't cast problem to ProblemDrones" << std::endl;
 	}
 	else
-		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
+		std::cout << "ERROR : couldn't cast resulting body" << std::endl;*/
+}
+
+void Simulator::addHybrid(float xPos, float yPos)
+{
+	BodyHybrid* body = static_cast<BodyHybrid*>(this->world.createBody(BODY_TYPE::HYBRID, xPos, yPos));
+	if (body != NULL)
+	{
+		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
+		if (castedProblem != NULL)
+		{
+			AgentHybridProblemDrones* agent = new AgentHybridProblemDrones(castedProblem);
+			agent->connectCasted(body);
+			this->agents.push_back(agent);
+		}
+		else
+			std::cout << "Simulator::addHybrid : ERROR : couldn't cast problem to ProblemDrones" << std::endl;
+	}
+	else
+		std::cout << "Simulator::addHybrid : ERROR : couldn't cast resulting body" << std::endl;
 }
 
 void Simulator::run(sf::Time refreshRate)
@@ -68,6 +87,9 @@ void Simulator::run(sf::Time refreshRate)
 	int eventID = 0;
 
 	sf::Time startTime, endTime;
+
+	std::cout << "Simulator::run : Initializing connection." << endl;
+	this->problem->init();
 
 	// VI51 VERSION
 	std::cout << "Starting program loop" << std::endl;
@@ -108,8 +130,6 @@ void Simulator::run(sf::Time refreshRate)
 		else
 		{
 			checkEvents();	// Checking for user input
-
-			//std::cout << "C'est là?" << std::endl;
 
 			endTime = simulationClock.getElapsedTime();
 			sf::Time frameTime = endTime - startTime;

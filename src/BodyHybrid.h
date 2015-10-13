@@ -1,22 +1,24 @@
 #ifndef BODYHYBRID_H_
 #define BODYHYBRID_H_
 
-
+#include "Emitter.h"
+#include "BodyReceptorComposition.h"
 
 /*
 *	Emitter + receptor
 */
 
-/*class BodyHybrid: public BodyEmitter, public BodyReceptor
+class BodyHybrid: public Emitter, public BodyReceptorComposition
 {
 private:
 
 public:
-	BodyHybrid(Semantic type);
+	BodyHybrid(Semantic type, float x, float y);
 
-	virtual void update(int elapsedTime);
+	virtual void update(sf::Time elapsedTime);
+	virtual void initialize();
 
 	~BodyHybrid(void);
-};*/
+};
 
 #endif

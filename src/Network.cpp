@@ -33,6 +33,8 @@ bool Network::sendData(string data)
 
 bool Network::receiveData(deque<string>* data)
 {
+	this->listen();
+
 	if (this->receivedMessages.empty())
 		return false;
 
@@ -44,14 +46,23 @@ bool Network::receiveData(deque<string>* data)
 
 void Network::cleanMessage(string& message)
 {
-	// Removing end spaces
-	while (message.back() == ' ')
+	//TODO: add a case where sent data is bigger than 100 bytes
+
+	// Removing end stuff
+	for (string::iterator it = message.begin(); it != message.end(); ++it)
+	{
+
+	}
+	
+	while (message.back() == ' '
+		|| message.back() == '\n')
 	{
 		message.pop_back();
 	}
 
 	// Removing front spaces
-	while (message.front() == ' ')
+	while (message.front() == ' '
+		|| message.front() == '\n')
 	{
 		message.erase(message.begin());
 	}
@@ -62,18 +73,23 @@ bool Network::initConnection(int portNumber)
 	// bind the listener to a port
 	if (listener.listen(portNumber) != sf::Socket::Done)
 	{
-		std::cout << "ERROR : Network::listen : listening to port number " << portNumber << " failed. Aborting..." << std::endl;
+		std::cout << "ERROR : Network::initConnection : listening to port number " << portNumber << " failed. Aborting..." << std::endl;
 		return false;
 	}
+
+	std::cout << "Network::initConnection : listener bound on port " << portNumber << endl;
 
 	// accept a new connection
 	if (listener.accept(this->unitySocket) != sf::Socket::Done)
 	{
-		std::cout << "ERROR : Network::listen : Couldn't accept client. Aborting..." << std::endl;
+		std::cout << "ERROR : Network::initConnection : Couldn't accept client. Aborting..." << std::endl;
 		return false;
 	}
 
-	std::cout << "Network::listen : Accepted connection on port " << portNumber << std::endl;
+	std::cout << "Network::initConnection : Accepted connection on port " << portNumber << std::endl;
+	this->unitySocket.setBlocking(false);
+
+	return true;
 }
 
 void Network::listen()
@@ -83,7 +99,6 @@ void Network::listen()
 
 	if (this->unitySocket.receive(data, 100, bytesReceived) != sf::Socket::Done)
 	{
-		cout << "ERROR : Network::listen : Error receiving message. Aborting..." << endl;
 		return;
 	}
 
@@ -91,6 +106,9 @@ void Network::listen()
 
 	// Cleaning and formatting
 	string message(data);
+
+	cout << endl << message << endl;
+
 	this->cleanMessage(message);
 
 	// Add to list of received

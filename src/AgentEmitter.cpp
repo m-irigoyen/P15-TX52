@@ -7,11 +7,6 @@ AgentEmitter::AgentEmitter(Problem* problem, BodyEmitter* body) : Agent(problem,
 	connectCasted(body);
 }
 
-void AgentEmitter::live()
-{
-	//((BodyEmitter*)this->body)->send(1.0f,1.0f);
-}
-
 AgentEmitter::~AgentEmitter(void)
 {
 	Agent::connect(body);

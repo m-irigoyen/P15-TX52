@@ -18,7 +18,8 @@
 enum BODY_TYPE
 {
     EMITTER = 0,
-    RECEPTOR
+    RECEPTOR,
+	HYBRID
 };
 
 class World
@@ -46,6 +47,8 @@ private:
 	sf::Clock* simulationClock;
 	sf::Time currentFrameTime;
 
+	
+
 public:
 	World(sf::Clock* clock, float worldLength, float worldHeight);
 
@@ -69,6 +72,13 @@ public:
 	std::vector<Wave*>* getWaves();
 	std::vector<BodyEmitter*>* getEmitters();
 	std::vector<BodyReceptor*>* getReceptors();
+
+	// Display stuff
+	void setDisplayWaves(bool display);
+	void setDisplayEmitters(bool display);
+	void setDisplayRecetors(bool display);
+
+	void setMaxAmplitude(float maxAmplitude);
 
 	~World(void);
 };

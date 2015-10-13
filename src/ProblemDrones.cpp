@@ -6,7 +6,18 @@ ProblemDrones::ProblemDrones(std::map<int, DRONE_BEHAVIOURS> behaviourTable, int
 
 void ProblemDrones::run(sf::Time elapsedTime)
 {
-	//this->
+	this->unityConnection.receiveData(&this->messages);
+
+	while (!messages.empty())
+	{
+		std::cout << "Message : " << messages.front() << std::endl;
+		messages.pop_front();
+	}
+}
+
+bool ProblemDrones::init(int portNumber)
+{
+	return this->unityConnection.initConnection(portNumber);
 }
 
 int ProblemDrones::getNumberOfDrones()

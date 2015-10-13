@@ -12,10 +12,6 @@
 #define EMITTER_RADIUSSIZE 6
 #define WAVE_SIZE 2
 
-//#define SKIP_WAVES
-//#define SKIP_EMITTERS
-//#define SKIP_RECEPTORS
-
 /*
 *   The GraphicView is charged of visualizing the whole thing.
 */
@@ -31,18 +27,23 @@ private:
 
 	// display stuff
 	bool displayWaves;
+	bool displayReceptors;
+	bool displayEmitters;
 
-	//PointerProblem stuff
-	sf::CircleShape& secondPointer;
+	// Used to compute the alpha component of waves
+	float maxAmplitude;
 
 public:
-	GraphicView(sf::CircleShape& secondPointer);
+	GraphicView();
 
 	void Init(int height, int width);
 	int CheckEvent();
 	void Draw();
 
 	void setDisplayWaves(bool displayWaves);
+	void setDisplayEmitters(bool displayEmitters);
+	void setDisplayReceptors(bool displayReceptors);
+	void setMaxAmplitude(float amplitude);
 	void toggleDisplayWaves();
 
 	sf::RenderWindow* getWindow();

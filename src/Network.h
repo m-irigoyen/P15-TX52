@@ -21,7 +21,7 @@ public:
 	Network();
 
 	bool closeConnection();
-	bool initConnection(int portNumber);
+	bool initConnection(int portNumber = 13374);
 
 	void listen();	// listen for incomming messages
 

@@ -27,7 +27,7 @@ void AgentEmitterProblemPointer::live()
 	// Encoding x/y position
 	double frequency = ((mouseX)*FREQUENCY_RANGE / (double)windowWidth) + this->castedProblem->getFrequencyOffset();	// offsetting a bit, to make sure wave transmission is kept
 	double amplitude = ((mouseY)*AMPLITUDE_RANGE / (double)windowHeight) + AMPLITUDE_OFFSET;
-
+		
 	this->castedBody->send(frequency, amplitude);
 
 	//std::cout << "Emitting : " << frequency << ", " << amplitude << std::endl;;

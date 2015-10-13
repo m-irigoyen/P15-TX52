@@ -17,7 +17,7 @@ protected:
 public:
 	AgentEmitter(Problem* problem, BodyEmitter* body = NULL);
 
-	virtual void live();
+	virtual void live() = 0;
 
 	virtual void connectCasted(BodyEmitter* body);
 	virtual void disconnect();
