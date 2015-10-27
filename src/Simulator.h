@@ -8,13 +8,17 @@
 #include "GraphicView.h"
 
 // Pointer problem
-#include "ProblemPointer.h"
 #include "AgentEmitterProblemPointer.h"
 #include "AgentReceptorProblemPointer.h"
 
-#include "ProblemDrones.h"
+// Drone problem
 #include "AgentHybridProblemDrones.h"
 #include "BodyHybrid.h"
+
+// Rocket problem
+#include "AgentEmitterRocket.h"
+#include "AgentReceptorRocket.h"
+#include "AgentRocketTest.h"
 
 
 /*
@@ -31,34 +35,37 @@
 class Simulator
 {
 private:
-	GraphicView SFMLView;
-	sf::RenderWindow* window;
+	GraphicView SFMLView;		// GUI
+	sf::RenderWindow* window;	// Reference to the window
 	
-	World world;    // The environment
-	std::vector<Agent*> agents; // All the agents
+	World world;				// The environment
+	std::vector<Agent*> agents; // The agents
 
-	sf::Clock simulationClock;
-	bool finishSimulation;
-	bool frameFlag;
+	sf::Clock simulationClock;	// The clock for the simulation
+	bool finishSimulation;		// Flag : exit application
+	bool frameFlag;				// Flag : Simulate/render frame
 
-	//User interface stuff
+	//User interface stuff, only used by the ProblemPointer
 	Body* selectedBody;
 
-	// ProblemPointer
-	//ProblemPointer* problem;   // The instance of the Problem.
-	ProblemDrones* problem;   // The instance of the Problem.
+		// Problem
+	//ProblemPointer* problem;   // The instance of the pointer problem.
+	//ProblemDrones* problem;   // The instance of the drone problem.
+	ProblemRocket* problem;   // The instance of the drone problem.
+
+	PROBLEM_TYPE problemType;
 
 public:
 	Simulator();
-	void init();
+	void init();	// Initialise everything. Is called before run()
 
-    // Creates a body for the given agent at given position, then adds this agent to the list,
+    // Creates an agent at given position, then add him to the agent list
 	void addEmitter(float xPos, float yPos);
 	void addReceptor(float xPos, float yPos);
 	void addHybrid(float xPos, float yPos);
 
-	void checkEvents();	// Check simulation events
-	void run(sf::Time refreshRate);
+	void checkEvents();					// Check user events
+	void run(sf::Time refreshRate);		// Simulation loop
 
 	~Simulator(void);
 };

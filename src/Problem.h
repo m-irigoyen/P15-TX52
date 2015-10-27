@@ -8,10 +8,18 @@
 * The Problem class creates and run the problem to be solved. (pendulum, drone, etc)
 */
 
+enum PROBLEM_TYPE
+{
+	POINTER,
+	DRONE,
+	ROCKET
+};
+
 class Problem
 {
 public:
-	virtual void run(sf::Time elapsedTime) = 0;
+	virtual void run(sf::Time elapsedTime) = 0;			// Run the problem
+	virtual void draw(sf::RenderWindow* window) = 0;	// Draw the problem on the given window
 };
 
 #endif

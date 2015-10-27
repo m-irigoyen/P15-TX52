@@ -4,13 +4,12 @@
 // This is an interface
 /*
 *	Emitters can send waves in the world.
+	There's nothing to implement in here, everything is already contained in the Emitter interface
 */
 
 #include "Body.h"
 #include "Emitter.h"
 
-
-//FIXME : Problem of refresh rate to send waves. Maybe add a timeToSend in send, so the world can already place the wave at the correct position accounting for the time that has passed
 class BodyEmitter : public Body, public Emitter
 {
 public:

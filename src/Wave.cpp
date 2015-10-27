@@ -53,7 +53,7 @@ void Wave::update(sf::Time elapsedTime)
 bool Wave::attenuate(sf::Time elapsedTime)
 {
 	//TODO: do attenuation
-	this->m_amplitude -= this->amplitudeLossPerSecond * elapsedTime.asSeconds();
+	this->m_amplitude -= this->amplitudeLossPerSecond * elapsedTime.asSeconds() * COEFF_ATTENUATION;
 
 	if (this->m_amplitude <= 0.0f)
 		return true;

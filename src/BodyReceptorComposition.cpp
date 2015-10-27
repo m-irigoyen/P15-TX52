@@ -15,13 +15,14 @@ void BodyReceptorComposition::initialise()
 
 }
 
-// Returns what the receptor can make of all it has recieved. #PHYSICS STUFF
+// Returns what the receptor can make of all it has recieved. This is the wave composition method
 WAVE_COMPOSITION BodyReceptorComposition::getPerception()
 {
 	// Resetting values
 	this->currentPerception.frequency = -1.0f;
 	this->currentPerception.amplitude = 0.0f;
 
+	// For each perceived wave
 	for (std::map<int, std::pair<sf::Time, std::pair<float, float>>>::iterator it = this->perception.getWaves()->begin();
 		it != this->perception.getWaves()->end();
 		++it)

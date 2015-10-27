@@ -1,56 +1,71 @@
 #include "Simulator.h"
 
 
-Simulator::Simulator() : world(&simulationClock, 400, 400), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL)
+Simulator::Simulator() : world(&simulationClock, 800, 600), finishSimulation(false), frameFlag(true), problem(NULL), selectedBody(NULL), problemType(PROBLEM_TYPE::ROCKET)
 {
-	this->SFMLView.Init(400, 400);
+	init();
 
+	this->SFMLView.Init(800, 600, this->problem);
+	this->SFMLView.setProblemType(this->problemType);
 	this->SFMLView.SetWorld(&this->world);
 	this->window = this->SFMLView.getWindow();
-
-	init();
 }
 
 void Simulator::init()
 {
 	std::cout << "Initialising" << std::endl;
-	//this->problem = new ProblemPointer(400, 400, secondPointer);
-	std::map<int, DRONE_BEHAVIOURS> behaviourTable;
-	this->problem = new ProblemDrones(behaviourTable, 1);
 
+			// INIT PROBLEM
+	// POINTER PROBLEM
+	//this->problem = new ProblemPointer(400, 400, secondPointer);
+
+	// Drone Problem
+	/*std::map<int, DRONE_BEHAVIOURS> behaviourTable;
+	this->problem = new ProblemDrones(behaviourTable, 1);*/
+
+	// Rocket Problem
+	this->problem = new ProblemRocket();
+	this->problem->init();
+
+
+	// TEST STUFF
+	this->agents.push_back(new AgentRocketTest(this->problem));
+	
+	// Adding initial agents
 	//addEmitter(200,200);
 	//addReceptor(400, 200);
+
 	std::cout << "Init done" << std::endl;
 }
 
 void Simulator::addEmitter(float xPos, float yPos)
 {
-	/*BodyEmitter* body = static_cast<BodyEmitter*>(this->world.createBody(BODY_TYPE::EMITTER, xPos, yPos));
+	BodyEmitter* body = static_cast<BodyEmitter*>(this->world.createBody(BODY_TYPE::EMITTER, xPos, yPos));
 	if (body != NULL)
 	{
-		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
+		ProblemRocket* castedProblem = static_cast<ProblemRocket*>(this->problem);
 		if (castedProblem != NULL)
 		{
-			AgentEmitterProblemDrones* agent = new AgentEmitterProblemDrones(castedProblem);
+			AgentEmitterRocket* agent = new AgentEmitterRocket(castedProblem);
 			agent->connectCasted(body);
 			this->agents.push_back(agent);
 		}
 		else
-			std::cout << "ERROR : couldn't cast problem to ProblemPointer" << std::endl;
+			std::cout << "ERROR : couldn't cast problem to ProblemRocket" << std::endl;
 	}
 	else
-		std::cout << "ERROR : couldn't cast resulting body" << std::endl;*/
+		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
 }
 
 void Simulator::addReceptor(float xPos, float yPos)
 {
-	/*BodyReceptorComposition* body = static_cast<BodyReceptorComposition*>(this->world.createBody(BODY_TYPE::RECEPTOR, xPos, yPos));
+	BodyReceptorComposition* body = static_cast<BodyReceptorComposition*>(this->world.createBody(BODY_TYPE::RECEPTOR, xPos, yPos));
 	if (body != NULL)
 	{
-		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
+		ProblemRocket* castedProblem = static_cast<ProblemRocket*>(this->problem);
 		if (castedProblem != NULL)
 		{
-			AgentReceptorProblemDrones* agent = new AgentReceptorProblemDrones(castedProblem);
+			AgentReceptorRocket* agent = new AgentReceptorRocket(castedProblem);
 			agent->connectCasted(body);
 			this->agents.push_back(agent);
 		}
@@ -58,12 +73,12 @@ void Simulator::addReceptor(float xPos, float yPos)
 			std::cout << "ERROR : couldn't cast problem to ProblemDrones" << std::endl;
 	}
 	else
-		std::cout << "ERROR : couldn't cast resulting body" << std::endl;*/
+		std::cout << "ERROR : couldn't cast resulting body" << std::endl;
 }
 
 void Simulator::addHybrid(float xPos, float yPos)
 {
-	BodyHybrid* body = static_cast<BodyHybrid*>(this->world.createBody(BODY_TYPE::HYBRID, xPos, yPos));
+	/*BodyHybrid* body = static_cast<BodyHybrid*>(this->world.createBody(BODY_TYPE::HYBRID, xPos, yPos));
 	if (body != NULL)
 	{
 		ProblemDrones* castedProblem = static_cast<ProblemDrones*>(this->problem);
@@ -77,7 +92,7 @@ void Simulator::addHybrid(float xPos, float yPos)
 			std::cout << "Simulator::addHybrid : ERROR : couldn't cast problem to ProblemDrones" << std::endl;
 	}
 	else
-		std::cout << "Simulator::addHybrid : ERROR : couldn't cast resulting body" << std::endl;
+		std::cout << "Simulator::addHybrid : ERROR : couldn't cast resulting body" << std::endl;*/
 }
 
 void Simulator::run(sf::Time refreshRate)
@@ -87,9 +102,6 @@ void Simulator::run(sf::Time refreshRate)
 	int eventID = 0;
 
 	sf::Time startTime, endTime;
-
-	std::cout << "Simulator::run : Initializing connection." << endl;
-	this->problem->init();
 
 	// VI51 VERSION
 	std::cout << "Starting program loop" << std::endl;

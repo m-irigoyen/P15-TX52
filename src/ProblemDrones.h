@@ -43,6 +43,13 @@ struct droneOrder
 	float zOffset;
 };
 
+struct pos3
+{
+	float xPos;
+	float yPos;
+	float zPos;
+};
+
 enum DRONE_BEHAVIOURS
 {
 	hover,		// Default behaviour : just hover and don't do anything
@@ -59,6 +66,7 @@ protected:
 	deque<string> messages;
 
 	map<int, droneOrder> droneCommands;	// Orders that the Problem will transmit to Unity
+	map<int, pos3> dronePositions;
 
 	int nbDrones;	// The number of drones
 
@@ -68,10 +76,15 @@ public:
 	ProblemDrones(std::map<int,DRONE_BEHAVIOURS> behaviourTable, int numberOfDrones);
 
 	virtual void run(sf::Time elapsedTime);	// run the whole thing
+	virtual void replicatePositions();
 
 	bool init(int portNumber = 13374);	// Inits connection with Unity
 
-	int getNumberOfDrones();
+	int getNbDrones();
+	void setNbDrones(int nbDrones);
+
+	pos3 getPos(int droneId);
+	void setPos(int droneId, pos3 pos);
 
 	void setDroneOrder(int droneId, droneOrder order);	// This is just to centralize message sending. ultimately, each drone should have its own network socket
 

@@ -16,7 +16,7 @@ public:
 	BodyHybrid(Semantic type, float x, float y);
 
 	virtual void update(sf::Time elapsedTime);
-	virtual void initialize();
+	virtual void initialise();
 
 	~BodyHybrid(void);
 };

@@ -45,27 +45,39 @@ bool Network::receiveData(deque<string>* data)
 }
 
 void Network::cleanMessage(string& message)
-{
-	//TODO: add a case where sent data is bigger than 100 bytes
-
-	// Removing end stuff
-	for (string::iterator it = message.begin(); it != message.end(); ++it)
-	{
-
-	}
-	
+{	
 	while (message.back() == ' '
-		|| message.back() == '\n')
+		|| message.back() == '\n'
+		|| message.back() == '\r')
+		message.pop_back();
+
+	while (message.front() == ' '
+		|| message.front() == '\n'
+		|| message.front() == '\r')
+		message.erase(message.begin());
+}
+
+bool Network::isValidMessage(string message)
+{
+	if (message.front() == 'B' && message.back() == 'E')
+		return true;
+
+	cout << "Invalid message : " << message.front() << ", " << message.back() << endl;
+	return false;
+}
+
+bool Network::trimMessage(string & message)
+{
+	this->cleanMessage(message);
+	if (this->isValidMessage(message))
 	{
 		message.pop_back();
-	}
-
-	// Removing front spaces
-	while (message.front() == ' '
-		|| message.front() == '\n')
-	{
 		message.erase(message.begin());
+		this->cleanMessage(message);
+		return true;
 	}
+	cout << "Network::trimMessage : after trimming, couldn't validate message " << endl;
+	return false;
 }
 
 bool Network::initConnection(int portNumber)
@@ -99,18 +111,23 @@ void Network::listen()
 
 	if (this->unitySocket.receive(data, 100, bytesReceived) != sf::Socket::Done)
 	{
+		//std::cout << "Network::listen : failed to read socket" << endl;
 		return;
 	}
 
-	std::cout << "Network::Listen : Received " << bytesReceived << " bytes" << endl;
 
 	// Cleaning and formatting
 	string message(data);
+	message.resize(bytesReceived);
 
-	cout << endl << message << endl;
+	std::cout << "Network::Listen : Received " << bytesReceived << " bytes : " << message << endl;
 
-	this->cleanMessage(message);
-
-	// Add to list of received
-	this->receivedMessages.push_back(message);
+	if (this->trimMessage(message))
+	{
+		this->receivedMessages.push_back(message);
+	}
+	else
+	{
+		std::cout << "Network::Listen : ERROR : Received invalid message : " << message << std::endl;
+	}
 }

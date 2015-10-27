@@ -12,11 +12,14 @@ class AgentHybridProblemDrones : public AgentHybrid
 {
 protected:
 	ProblemDrones* castedProblem;
+	int droneId;
 
 public:
-	AgentHybridProblemDrones(ProblemDrones* problem, BodyHybrid* body = NULL);
+	AgentHybridProblemDrones(ProblemDrones* problem, BodyHybrid* body = NULL, int droneId = -1);
 
 	virtual void live();
+
+	void connectEmitter();
 
 	~AgentHybridProblemDrones(void);
 };

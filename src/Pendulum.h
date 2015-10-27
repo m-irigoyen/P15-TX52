@@ -1,10 +1,3 @@
-/*
- * Jérôme COUSSANES
- * jerome.coussanes@utbm.fr
- *
- *
- */
-
 #ifndef DEF_SIN
 #define DEF_SIN
 

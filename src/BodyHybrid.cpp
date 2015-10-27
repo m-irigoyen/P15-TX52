@@ -21,6 +21,6 @@ void BodyHybrid::update(sf::Time elapsedTime)
 	BodyReceptor::update(elapsedTime);
 }
 
-void BodyHybrid::initialize()
+void BodyHybrid::initialise()
 {
 }

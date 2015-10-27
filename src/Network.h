@@ -2,7 +2,7 @@
 #define NETWORK_H_
 
 /**
-*	The Nework class handles TCP communication. It can send and receive messages.
+*	The Nework class handles TCP communication with unity. It can send and receive messages.
 *	Messages begin with "BEG " an end with " END". How the messages are sent is not the user's concern.
 *
 *	We use TCP : so we're sure every message will be recieved.
@@ -37,6 +37,8 @@ private:
 
 	//Message formatting stuff
 	void cleanMessage(string& message);	// Removes empty spaces at the front and back of the string
+	bool isValidMessage(string message);
+	bool trimMessage(string& message);
 };
 
 #endif

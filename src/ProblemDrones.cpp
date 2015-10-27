@@ -10,8 +10,19 @@ void ProblemDrones::run(sf::Time elapsedTime)
 
 	while (!messages.empty())
 	{
-		std::cout << "Message : " << messages.front() << std::endl;
+		std::cout << "ProblemDrones::run : Received message : " << messages.front() << std::endl;
 		messages.pop_front();
+	}
+}
+
+void ProblemDrones::replicatePositions()
+{
+	for (std::map<int, pos3>::iterator it = this->dronePositions.begin(); it != this->dronePositions.end(); ++it)
+	{
+		string message;
+		message.insert(message.size(), std::to_string(it->first));
+		cout << "ProblemDrones::replicatePositions : sending : " << message << endl << "size : " << endl;
+		this->unityConnection.sendData(message);
 	}
 }
 
@@ -20,9 +31,44 @@ bool ProblemDrones::init(int portNumber)
 	return this->unityConnection.initConnection(portNumber);
 }
 
-int ProblemDrones::getNumberOfDrones()
+int ProblemDrones::getNbDrones()
 {
 	return this->nbDrones;
+}
+
+void ProblemDrones::setNbDrones(int nbDrones)
+{
+	if (nbDrones > 1)
+		this->nbDrones = nbDrones;
+}
+
+pos3 ProblemDrones::getPos(int droneId)
+{
+	
+
+	map<int, pos3>::iterator it = this->dronePositions.find(droneId);
+
+	if (it != this->dronePositions.end())
+	{
+		return it->second;
+	}
+	std::cout << "ProblemDrones::getPos : ERROR : couldn't find droneId" << std::endl;
+	return pos3();
+}
+
+void ProblemDrones::setPos(int droneId, pos3 pos)
+{
+	if (this->dronePositions.count(droneId) == 0)
+		this->dronePositions.insert(pair<int, pos3>(droneId, pos));
+	else
+	{
+		// Searching if that droneId already exists in the map
+		std::map<int, pos3>::iterator it = this->dronePositions.find(droneId);
+		if (it != this->dronePositions.end())
+			it->second = pos; // Found one
+		else
+			this->dronePositions.insert(std::pair<int, pos3>(droneId, pos)); // Couldn't find one, insert it
+	}
 }
 
 void ProblemDrones::setDroneOrder(int droneId, droneOrder order)
@@ -31,10 +77,13 @@ void ProblemDrones::setDroneOrder(int droneId, droneOrder order)
 		this->droneCommands.insert(pair<int, droneOrder>(droneId, order));
 	else
 	{
-		//TODO : finish this
-		//this->droneCommands.find(droneId)
+		// Searching if that droneId already exists in the map
+		std::map<int, droneOrder>::iterator it = this->droneCommands.find(droneId);
+		if (it != this->droneCommands.end())
+			it->second = order; // Found one
+		else
+			this->droneCommands.insert(std::pair<int, droneOrder>(droneId, order)); // Couldn't find one, insert it
 	}
-
 }
 
 // Gets corresponding behaviour to given frequency
